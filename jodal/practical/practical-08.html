@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="NaverBot" content="noindex, nofollow">
+<meta name="Yeti" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공공조달관리사 2차 실기(필답형) 제8회 모의고사</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --ink: #1f2933; --muted: #616e7c; --line: #dde3ea;
+    --brand: #1d4e89; --brand-soft: #e8f0fa; --ok: #1a7f4b; --ok-soft: #e6f4ec;
+    --warn: #b54708; --warn-soft: #fdf1e7; --bad: #b42318; --bad-soft: #fdeceb;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: -apple-system, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; line-height: 1.65; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+  header.top { background: var(--brand); color: #fff; padding: 28px 16px 24px; }
+  header.top .inner { max-width: 860px; margin: 0 auto; }
+  header.top h1 { margin: 0 0 6px; font-size: 1.5rem; }
+  header.top p { margin: 0; opacity: .85; font-size: .95rem; }
+  header.top a.back { color: #fff; opacity: .85; font-size: .88rem; text-decoration: none; display: inline-block; margin-bottom: 8px; }
+  header.top a.back:hover { text-decoration: underline; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .notice { font-size: .92rem; color: var(--muted); }
+  .notice ul { margin: 8px 0 0; padding-left: 20px; }
+  label.field { display: block; font-weight: 500; margin-bottom: 6px; }
+  input[type=text], textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+         font: inherit; font-size: .97rem; background: #fff; color: var(--ink); }
+  textarea { min-height: 150px; resize: vertical; }
+  input:focus, textarea:focus { outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand); }
+  .section-title { font-size: 1.05rem; font-weight: 700; color: var(--brand); margin: 28px 0 12px; }
+  .q-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 6px; }
+  .q-no { font-weight: 700; color: var(--brand); white-space: nowrap; }
+  .q-title { font-weight: 700; }
+  .tag { font-size: .75rem; padding: 2px 8px; border-radius: 99px; background: var(--brand-soft); color: var(--brand); white-space: nowrap; }
+  .q-text { margin: 4px 0 12px; white-space: pre-wrap; }
+  .meta { font-size: .8rem; color: var(--muted); text-align: right; margin-top: 4px; }
+  .short-part { display: grid; grid-template-columns: 190px 1fr; gap: 10px; align-items: center; margin-bottom: 8px; }
+  @media (max-width: 560px) { .short-part { grid-template-columns: 1fr; gap: 4px; } }
+  .choice { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px; cursor: pointer; }
+  .choice:hover { background: #f8fafc; }
+  .choice input { margin-top: 5px; }
+  .btn { display: inline-block; border: 0; border-radius: 10px; padding: 14px 28px; font: inherit; font-weight: 700;
+         font-size: 1.05rem; cursor: pointer; background: var(--brand); color: #fff; text-decoration: none; }
+  .btn.secondary { background: #fff; color: var(--brand); border: 1px solid var(--brand); }
+  .btn.small { padding: 8px 16px; font-size: .85rem; border-radius: 8px; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .interim-box { margin-top: 14px; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .code-badge { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700;
+                letter-spacing: .05em; background: var(--brand-soft); color: var(--brand);
+                padding: 4px 10px; border-radius: 6px; display: inline-block; }
+  .center { text-align: center; }
+  .hidden { display: none !important; }
+  .error { background: var(--bad-soft); border: 1px solid #f4c7c3; color: var(--bad); }
+
+  /* 회차 목록 */
+  .exam-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .exam-card { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line);
+               border-radius: 12px; padding: 18px; transition: border-color .15s, transform .15s; }
+  .exam-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+  .exam-card h3 { margin: 0 0 6px; color: var(--brand); font-size: 1.1rem; }
+  .exam-card p { margin: 0 0 12px; color: var(--muted); font-size: .9rem; }
+  .exam-card .go { font-weight: 700; color: var(--brand); font-size: .9rem; }
+
+  /* 타이머 */
+  .timer { position: sticky; top: 0; z-index: 5; background: #fff; border-bottom: 1px solid var(--line);
+           padding: 8px 16px; text-align: center; font-weight: 700; color: var(--brand); }
+  .timer.low { color: var(--bad); }
+
+  /* 결과 화면 */
+  .result-hero { text-align: center; padding: 32px 20px; }
+  .result-hero .score { font-size: 3.2rem; font-weight: 700; line-height: 1.1; }
+  .result-hero .score small { font-size: 1.2rem; color: var(--muted); font-weight: 500; }
+  .result-hero .msg { font-size: 1.3rem; font-weight: 700; margin-top: 12px; }
+  .result-hero.pass { background: var(--ok-soft); border-color: #b7e0c8; }
+  .result-hero.pass .msg, .result-hero.pass .score { color: var(--ok); }
+  .result-hero.fail { background: var(--warn-soft); border-color: #f5d0b0; }
+  .result-hero.fail .msg, .result-hero.fail .score { color: var(--warn); }
+  .save-status { font-size: .85rem; color: var(--muted); margin-top: 10px; }
+  table.subj { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  table.subj th, table.subj td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+  table.subj td.num, table.subj th.num { text-align: right; }
+  .subj-fail { color: var(--bad); font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+  .chip { border: 1px solid var(--line); border-radius: 8px; padding: 8px; text-align: center; font-size: .85rem;
+          text-decoration: none; color: inherit; background: #fff; }
+  .chip b { display: block; font-size: 1rem; }
+  .chip.full { background: var(--ok-soft); border-color: #b7e0c8; }
+  .chip.mid { background: var(--warn-soft); border-color: #f5d0b0; }
+  .chip.zero { background: var(--bad-soft); border-color: #f4c7c3; }
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  @media (max-width: 680px) { .cmp { grid-template-columns: 1fr; } }
+  .box { border-radius: 8px; padding: 12px 14px; font-size: .93rem; white-space: pre-wrap; word-break: keep-all; }
+  .box h4 { margin: 0 0 6px; font-size: .85rem; }
+  .box.mine { background: #f8fafc; border: 1px solid var(--line); }
+  .box.model { background: var(--brand-soft); border: 1px solid #c9dbf2; }
+  .box.exp { background: #fffbea; border: 1px solid #f3e3a1; margin-top: 12px; white-space: normal; }
+  .rubric { list-style: none; padding: 0; margin: 12px 0 0; font-size: .88rem; }
+  .rubric li { padding: 4px 0; border-bottom: 1px dashed var(--line); display: flex; gap: 8px; }
+  .rubric li:last-child { border-bottom: 0; }
+  .rubric .mark { width: 20px; flex: none; font-weight: 700; }
+  .rubric .hit .mark { color: var(--ok); }
+  .rubric .partial .mark { color: var(--warn); }
+  .rubric .miss .mark { color: var(--bad); }
+  .rubric .pt { margin-left: auto; color: var(--muted); white-space: nowrap; }
+  .q-score { margin-left: auto; font-weight: 700; white-space: nowrap; }
+  .empty { color: var(--muted); font-style: italic; }
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+  footer.foot { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 40px; }
+  @media print { header.top, .actions, .timer { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <a class="back" href="./">← 회차 목록</a>
+    <h1 id="siteTitle">공공조달관리사 2차 실기(필답형) 제8회 모의고사</h1>
+    <p id="siteSub"></p>
+  </div>
+</header>
+<div id="timerBar" class="timer hidden"></div>
+<main class="wrap" id="app"><div class="card notice">불러오는 중…</div></main>
+
+<script type="application/json" id="exam-data">{"id": "exam08", "title": "공공조달관리사 2차 실기(필답형) 제8회 모의고사", "subtitle": "서술형 20문항 · 문항당 5점 · 100점 만점 · 60점 이상 합격", "defaultPoints": 5, "timeLimitMin": 0, "pass": {"percent": 60, "subjectMinPercent": 0}, "questions": [{"no": 1, "type": "essay", "subject": "서술형", "title": "비용 대비 가치(VFM)의 개념 및 구현 범위 [서술형]", "question": "공공조달의 8대 핵심가치 중 하나인 '비용 대비 가치(VFM: Value for Money)'의 개념을 정의하고, 이를 달성하기 위해 조달 구매 시 종합적으로 고려해야 하는 범위를 서술하시오.", "points": 5, "answer": "VFM은 단순한 최초 구매 가격(최저가)의 최소화를 추구하는 것을 넘어, 예산 대비 가치를 극대화하는 원칙이다. 이를 구현하려면 최초 취득가뿐만 아니라 운영, 유지보수, 폐기까지의 전 생애주기 비용(LCC/TCO)과 품질, 성능, 안전성, 중소기업 보호 등 사회·환경적 가치를 종합적으로 고려해야 한다.", "rubric": [{"p": 2.0, "label": "VFM 정의: 단순 최저가가 아닌 예산 대비 가치의 극대화", "k": [["vfm", "비용대비가치", "가치"]], "s": ["최저가", "예산", "극대화", "최소화"]}, {"p": 1.5, "label": "고려범위1: 전 생애주기 비용(LCC/TCO) - 취득·운영·유지보수·폐기", "k": [["생애주기", "lcc", "tco"]], "s": ["취득", "운영", "유지보수", "폐기"]}, {"p": 1.5, "label": "고려범위2: 품질·성능·안전성·중소기업 보호 등 사회·환경적 가치", "k": [["품질", "성능", "안전성", "중소기업"]], "s": ["사회", "환경", "가치"]}], "explanation": "VFM은 현대 공공조달이 단순 최저가 낙찰에서 품질·생애주기비용·사회적 가치 결합형 조달로 전환되었음을 보여주는 핵심 개념입니다.", "section": "서술형 (Q01 ~ Q20)"}, {"no": 2, "type": "essay", "subject": "서술형", "title": "추정가격과 사업금액의 법적 구분 [서술형]", "question": "공공조달 예산 작성 및 입찰 진행 시 기준이 되는 '추정가격'과 '사업금액'의 개념 차이를 부가가치세 및 관급자재대 포함 여부를 중심으로 비교하여 서술하시오.", "points": 5, "answer": "추정가격은 국제입찰, 수의계약, 입찰방법 등을 결정하는 기준 금액으로, 부가가치세와 관급자재대를 제외한 순수한 계약 목적물 추정 금액이다. 반면, 사업금액은 부가가치세와 관급자재대를 모두 포함하여 편성된 해당 사업의 총 예산 규모를 의미한다.", "rubric": [{"p": 2.5, "label": "추정가격: 국제입찰·수의계약·입찰방법 결정 기준금액, VAT·관급자재대 제외", "k": [["추정가격"], ["제외", "배제"]], "s": ["국제입찰", "수의계약", "부가가치세", "관급자재"]}, {"p": 2.5, "label": "사업금액: VAT·관급자재대 모두 포함한 해당 사업 총 예산 규모", "k": [["사업금액"], ["포함"]], "s": ["부가가치세", "관급자재", "예산", "총"]}], "explanation": "추정가격(VAT·관급자재대 제외) vs 사업금액(VAT·관급자재대 포함)을 대조하여 기억하세요."}, {"no": 3, "type": "essay", "subject": "서술형", "title": "물품목록번호 16자리 체계 [서술형]", "question": "국가종합전자조달시스템(나라장터)에서 개별 물품을 식별하기 위해 사용하는 총 16자리의 '물품목록번호' 구성 체계를 물품분류번호와 물품식별번호로 나누어 설명하시오.", "points": 5, "answer": "물품목록번호는 앞 8자리의 '물품분류번호'와 뒤 8자리의 '물품식별번호'로 구성된다. 물품분류번호는 대·중·소·세분류 각 2자리씩 총 8자리(UNSPSC 체계 기반)로 이루어지며, 물품식별번호 8자리는 제조업체 및 세부 모델·규격을 고유하게 식별하기 위해 부여된다.", "rubric": [{"p": 2.5, "label": "물품분류번호 8자리: 대·중·소·세분류 각 2자리(UNSPSC 체계)", "k": [["분류번호"], ["8자리", "8"]], "s": ["대분류", "중분류", "소분류", "세분류", "unspsc"]}, {"p": 2.5, "label": "물품식별번호 8자리: 제조업체·모델·규격을 고유 식별", "k": [["식별번호"], ["8자리", "8"]], "s": ["제조업체", "모델", "규격", "고유"]}], "explanation": "물품목록번호 16자리는 분류 8자리와 식별 8자리로 이루어집니다."}, {"no": 4, "type": "essay", "subject": "서술형", "title": "직접생산확인제도의 목적 및 사후 검증 [서술형]", "question": "중소기업자 간 경쟁제품 입찰 시 필수적인 '직접생산확인제도'의 도입 목적과, 사후 검증을 위해 실시하는 실태조사의 원칙을 서술하시오.", "points": 5, "answer": "직접생산확인제도는 중소기업자 간 경쟁제품 납품 시 하청 생산, 타사 완제품 단순 상표 부착, 수입품 납품 등의 부당 행위를 방지하고 실제 직접 제조 능력을 검증하기 위한 제도이다. 사후 실태조사는 최근 3년 이내 납품 실적이 있는 품명을 대상으로 현장조사를 원칙으로 실시한다.", "rubric": [{"p": 3.0, "label": "목적: 하청생산·상표부착·수입품 납품 등 부당 행위 방지, 직접 제조 능력 검증", "k": [["하청", "상표부착", "수입품"]], "s": ["부당", "방지", "직접제조", "검증"]}, {"p": 2.0, "label": "실태조사 원칙: 최근 3년 이내 납품실적 있는 품명 대상 현장조사", "k": [["실태조사", "현장조사"]], "s": ["3년", "납품실적"]}], "explanation": "직접생산확인제도는 부당 납품 방지와 진정한 제조기업 보호가 핵심 취지이며, 실태조사는 최근 3년 이내 납품실적 품명이 대상입니다."}, {"no": 5, "type": "essay", "subject": "서술형", "title": "구매사양 작성의 SMART 원칙 [서술형]", "question": "구매사양서 및 과업지시서 작성 시 적용해야 하는 'SMART 원칙' 5가지를 각각 나열하고 의미를 간략히 서술하시오.", "points": 5, "answer": "구매사양은 명확성(Specific: 구체적인 내용 명시), 측정가능성(Measurable: 성과 및 품질의 계량적 측정 가능), 달성가능성(Achievable: 기술적/물리적으로 실현 가능), 현실성(Realistic: 예산 및 시장 상황에 부합), 시간제한성(Time-bound: 명확한 납기 및 이행 기간 설정)을 충족하도록 작성해야 한다.", "rubric": [{"p": 1.0, "label": "Specific(명확성): 구체적인 내용 명시", "k": [["specific", "명확성"]], "s": ["구체적"]}, {"p": 1.0, "label": "Measurable(측정가능성): 성과·품질의 계량적 측정 가능", "k": [["measurable", "측정가능"]], "s": ["계량", "성과", "품질"]}, {"p": 1.0, "label": "Achievable(달성가능성): 기술적·물리적으로 실현 가능", "k": [["achievable", "달성가능"]], "s": ["기술적", "물리적", "실현"]}, {"p": 1.0, "label": "Realistic(현실성): 예산 및 시장 상황에 부합", "k": [["realistic", "현실성"]], "s": ["예산", "시장"]}, {"p": 1.0, "label": "Time-bound(시간제한성): 명확한 납기 및 이행 기간 설정", "k": [["timebound", "time-bound", "시간제한"]], "s": ["납기", "이행기간"]}], "explanation": "SMART 원칙의 5가지 영문 단어와 한글 의미를 세트로 암기하세요."}, {"no": 6, "type": "essay", "subject": "서술형", "title": "사전규격공개 제도 운영 기준 [서술형]", "question": "발주기관이 입찰공고 전 규격을 미리 공개하는 '사전규격공개 제도'의 의의를 특정 업체 규격 제한 측면에서 서술하고, 의견 회신 의무기한을 쓰시오.", "points": 5, "answer": "사전규격공개는 특정 업체에만 유리한 규격을 지정하는 일명 '스펙알박기'를 예방하고 입찰 참여 기회의 공정성을 확보하기 위해 공고 전 5일간 규격을 공개하는 제도이다. 발주기관은 업체로부터 제출된 개선 의견의 반영 여부를 최대 2주 이내에 검토하여 회신할 의무가 있다.", "rubric": [{"p": 2.5, "label": "의의: 스펙 알박기 예방, 공고 전 5일간 공개하여 입찰 참여 기회의 공정성 확보", "k": [["스펙알박기"], ["5일"]], "s": ["공정", "기회", "특정업체"]}, {"p": 2.5, "label": "회신기한: 제출된 개선의견 반영 여부를 최대 2주 이내 검토·회신 의무", "k": [["2주"]], "s": ["회신", "검토", "개선의견", "의무"]}], "explanation": "사전규격공개 기간은 5일, 개선의견 회신 기한은 2주 이내입니다."}, {"no": 7, "type": "essay", "subject": "서술형", "title": "예정가격 결정 4대 우선순위 [서술형]", "question": "공공조달 법정 '예정가격 결정기준'의 적용 우선순위 4단계를 순서대로 나열하시오.", "points": 5, "answer": "예정가격 결정은 법정 우선순위에 따라 1) 거래실례가격, 2) 원가계산에 의한 가격, 3) 표준시장단가, 4) 감정가격, 유사거래실례가격, 견적가격의 순서로 적용하여 결정해야 한다.", "rubric": [{"p": 5.0, "label": "4단계 순서: 거래실례가격 → 원가계산가격 → 표준시장단가 → 감정가격 등", "seq": ["거래실례", "원가계산", "표준시장단가", "감정"], "s": [["거래실례"], ["원가계산"], ["표준시장단가"], ["감정", "유사거래", "견적"]]}], "explanation": "예정가격 결정 4단계 법정 순서(거래실례가격→원가계산가격→표준시장단가→감정가격 등)를 암기하세요."}, {"no": 8, "type": "essay", "subject": "서술형", "title": "예정가격 산출 메커니즘 (국가/지방계약법 차이) [서술형]", "question": "기초금액을 바탕으로 복수예비가격을 작성하고 개찰 시 예정가격을 최종 결정하는 산출 구조를 국가계약법과 지방계약법의 복수예비가격 생성 범위(±%) 차이와 함께 서술하시오.", "points": 5, "answer": "발주기관은 기초금액을 기준으로 국가계약법령은 ±2%, 지방계약법령은 ±3% 범위 내에서 15개의 복수예비가격을 자동 생성한다. 개찰 시 입찰참가자들이 추첨한 번호 중 가장 많이 선택된 4개의 복수예비가격을 산술평균하여 최종 예정가격을 결정한다.", "rubric": [{"p": 1.5, "label": "국가계약법: 기초금액 ±2% 범위", "k": [["2%", "2"]], "s": ["국가계약법"]}, {"p": 1.5, "label": "지방계약법: 기초금액 ±3% 범위", "k": [["3%", "3"]], "s": ["지방계약법"]}, {"p": 2.0, "label": "산출 메커니즘: 15개 복수예비가격 생성, 가장 많이 추첨된 4개를 산술평균", "k": [["15개", "15"], ["4개", "4"]], "s": ["산술평균", "추첨", "기초금액"]}], "explanation": "국가계약법(±2%)과 지방계약법(±3%)의 복수예가 범위 차이, 4개 산술평균 방식을 명확히 외우세요."}, {"no": 9, "type": "essay", "subject": "서술형", "title": "원가계산에 의한 이윤 산정 공식 및 원칙 [서술형]", "question": "원가계산으로 예정가격을 작성할 때 5대 비목 중 '이윤'을 산정하는 공식(산식)을 쓰고, 일반적인 제조·구매 원가계산 이윤 산정 시 '재료비'의 취급 원칙을 서술하시오.", "points": 5, "answer": "이윤은 (노무비 + 경비 + 일반관리비) × 이윤율의 공식으로 산정한다. 원가계산 시 재료비는 순수한 물재의 가치일 뿐 이윤 창출의 부가가치 요소가 아니므로 이윤 산정 대상 비목에서 엄격히 제외(배제)하는 것이 원칙이다.", "rubric": [{"p": 2.5, "label": "이윤 공식: (노무비 + 경비 + 일반관리비) × 이윤율", "k": [["노무비"], ["경비"], ["일반관리비"], ["이윤율"]], "s": ["공식", "산식"]}, {"p": 2.5, "label": "재료비 배제 원칙: 재료비는 이윤 산정 대상 비목에서 제외", "k": [["재료비"], ["제외", "배제"]], "s": ["부가가치", "원칙"]}], "explanation": "이윤 계산 시 재료비를 제외한 [노무비+경비+일반관리비]에 이윤율을 곱하는 법 원칙을 반드시 준수해야 합니다."}, {"no": 10, "type": "essay", "subject": "서술형", "title": "물가변동(ESC)에 의한 계약금액 조정 요건 [서술형]", "question": "물가변동(ESC)으로 인한 계약금액 조정을 신청하기 위해 반드시 충족해야 하는 법정 필수 요건 2가지를 서술하시오.", "points": 5, "answer": "물가변동 계약금액 조정은 1) 계약체결일(또는 직전 조정기준일)로부터 90일 이상 경과해야 하며, 동시에 2) 품목조정률 또는 비목군별 지수조정률이 3% 이상 증감한 경우에만 성립한다.", "rubric": [{"p": 2.5, "label": "요건1: 계약체결일(또는 직전 조정기준일)로부터 90일 이상 경과", "k": [["90일", "90"]], "s": ["경과", "계약체결일"]}, {"p": 2.5, "label": "요건2: 품목조정률 또는 비목군별 지수조정률이 3% 이상 증감(두 요건 동시 충족)", "k": [["3%", "3"]], "s": ["품목조정률", "지수조정률", "증감"]}], "explanation": "물가변동(ESC)은 90일 경과 및 3% 이상 증감이라는 두 요건이 동시에 충족되어야 성립합니다."}, {"no": 11, "type": "essay", "subject": "서술형", "title": "제안서 평가위원 제척사유 [서술형]", "question": "협상에 의한 계약 등 제안서 평가 시 공정성을 확보하기 위해 규정된 평가위원 '제척사유'를 3가지 이상 서술하시오.", "points": 5, "answer": "제안서 평가위원은 1) 평가 대상 업체(입찰참가자)와 친족 관계인 경우, 2) 해당 사업(프로젝트)의 자문, 연구, 용역 등을 직접 수행한 경우, 3) 해당 입찰참가자와 하도급 등 직접적인 이해관계가 있는 경우, 4) 최근 3년 이내에 해당 업체에 재직한 경우 위촉에서 배제(제척)된다.", "rubric": [{"p": 1.25, "label": "제척사유1: 평가 대상 업체와 친족 관계인 경우", "k": [["친족"]]}, {"p": 1.25, "label": "제척사유2: 해당 사업의 자문·연구·용역 등을 직접 수행한 경우", "k": [["자문", "연구", "용역"]], "s": ["직접수행"]}, {"p": 1.25, "label": "제척사유3: 해당 입찰참가자와 하도급 등 직접적 이해관계가 있는 경우", "k": [["하도급"], ["이해관계"]]}, {"p": 1.25, "label": "제척사유4: 최근 3년 이내 해당 업체에 재직한 경우", "k": [["3년"], ["재직"]]}], "explanation": "친족관계·자문연구용역 수행·하도급 등 이해관계·최근 3년 이내 재직, 4가지 제척사유를 정리해 두세요."}, {"no": 12, "type": "essay", "subject": "서술형", "title": "계약의 해제와 해지의 법적 효력 차이 [서술형]", "question": "계약상대자의 귀책사유 등에 따른 계약 '해제'와 발주기관의 사정변경 등에 따른 '해지'의 차이점을 법적 효력(소멸 시점) 및 후속 조치 측면에서 비교하시오.", "points": 5, "answer": "계약의 '해제'는 계약 성립 시점으로 소급하여 그 효력을 무효화시키며 원상회복 의무와 계약보증금 국고 귀속 조치가 따른다. 반면, '해지'는 장래를 향해서만 효력을 소멸시키므로 기성(기납품) 부분은 인수 후 대가를 지급하며 실비 정산이 이루어진다.", "rubric": [{"p": 2.5, "label": "해제: 계약 성립 시점으로 소급하여 무효화, 원상회복 의무, 보증금 국고 귀속", "k": [["해제"]], "s": ["소급", "원상회복", "무효", "보증금", "국고"]}, {"p": 2.5, "label": "해지: 장래를 향해서만 효력 소멸, 기성(기납품) 부분 인수 후 대가 지급·실비 정산", "k": [["해지"]], "s": ["장래", "기성", "기납품", "실비", "정산"]}], "explanation": "해제(소급효, 원상회복·보증금 국고귀속) vs 해지(장래효, 기성부분 정산)를 대조하여 기억하세요."}, {"no": 13, "type": "essay", "subject": "서술형", "title": "계약 유형별 지체상금률 상한 [서술형]", "question": "계약 이행 지연 시 부과되는 1일당 법정 '지체상금률'을 1) 공사, 2) 물품 제조·구매, 3) 일반용역으로 구분하여 각각 기재하시오.", "points": 5, "answer": "1일당 지체상금률은 1) 공사: 0.05%(0.5/1000), 2) 물품 제조·구매: 0.075%(0.75/1000), 3) 일반용역: 0.125%(1.25/1000)가 적용되며, 지체상금의 총액 상한은 계약금액의 30%를 초과할 수 없다.", "rubric": [{"p": 1.7, "label": "공사: 1일당 0.05%(1,000분의 0.5)", "k": [["0.05%", "0.5/1000", "1000분의0.5", "1천분의0.5"]]}, {"p": 1.7, "label": "물품 제조·구매: 1일당 0.075%(1,000분의 0.75)", "k": [["0.075%", "0.75/1000", "1000분의0.75", "1천분의0.75"]]}, {"p": 1.6, "label": "일반용역: 1일당 0.125%(1,000분의 1.25)", "k": [["0.125%", "1.25/1000", "1000분의1.25", "1천분의1.25"]]}], "explanation": "지체상금률은 공사 0.5/1000, 물품 0.75/1000, 용역 1.25/1000이며, 부과 총액 상한은 계약금액의 30%입니다."}, {"no": 14, "type": "essay", "subject": "서술형", "title": "설계변경 시 신규비목의 협상단가 결정 원칙 [서술형]", "question": "시설공사 계약에서 발주기관의 필요나 귀책사유로 인해 당초 산출내역서에 없던 '신규비목'이 발생하여 설계변경을 진행할 때, 해당 단가를 산정하는 법정 원칙을 서술하시오.", "points": 5, "answer": "발주기관의 필요나 귀책사유로 인한 신규비목 단가는 설계변경 당시(설계도면 변경 승인일)를 기준으로 산정한 단가와, 그 단가에 낙찰률을 곱한 금액의 범위 내에서 발주기관과 계약상대자가 협의하여 결정하는 '협상단가 원칙'이 적용된다.", "rubric": [{"p": 2.0, "label": "기준시점: 설계변경 당시(설계도면 변경 승인일)를 기준으로 산정한 단가", "k": [["설계변경", "변경승인일"]], "s": ["기준", "산정", "당시"]}, {"p": 1.5, "label": "상한: 그 단가에 낙찰률을 곱한 금액의 범위 내", "k": [["낙찰률"]], "s": ["범위", "곱"]}, {"p": 1.5, "label": "협상단가 원칙: 발주기관과 계약상대자가 협의하여 결정", "k": [["협의"], ["결정"]], "s": ["협상단가", "발주기관", "계약상대자"]}], "explanation": "신규비목 단가는 설계변경 당시 기준단가와 낙찰률 적용 단가의 범위 내에서 쌍방 협의로 결정하는 '협상단가 원칙'이 핵심입니다."}, {"no": 15, "type": "essay", "subject": "서술형", "title": "다수공급자계약(MAS) 2단계경쟁 의무 기준 [서술형]", "question": "수요기관이 나라장터 종합쇼핑몰에서 다수공급자계약(MAS) 물품을 구매할 때 의무적으로 '2단계경쟁'을 거쳐야 하는 1회 납품요구금액 기준을 1) 일반물품과 2) 중소기업자 간 경쟁제품으로 구분하여 기재하시오.", "points": 5, "answer": "의무적인 MAS 2단계경쟁 한도 금액은 1회 납품요구금액을 기준으로 1) 일반물품은 5,000만 원 이상, 2) 중소기업자 간 경쟁제품은 1억 원 이상일 때 적용된다.", "rubric": [{"p": 2.5, "label": "일반물품: 1회 납품요구금액 5,000만 원 이상", "k": [["5000만", "50000000", "5천만"]]}, {"p": 2.5, "label": "중소기업자 간 경쟁제품: 1회 납품요구금액 1억 원 이상", "k": [["1억", "100000000"]]}], "explanation": "MAS 2단계경쟁 기준금액(일반물품 5,000만 원 / 중기간 경쟁제품 1억 원)은 실기 시험 단골 출제 항목입니다."}, {"no": 16, "type": "essay", "subject": "서술형", "title": "공사 PQ심사 (입찰참가자격 사전심사) [서술형]", "question": "대형 공사 입찰 시 도입되는 'PQ심사(입찰참가자격 사전심사)'의 개념과 평가 분야 4가지를 서술하시오.", "points": 5, "answer": "PQ심사는 부실 공사를 방지하고 계약 이행 능력을 갖춘 업체를 선별하기 위해, 입찰 전에 업체의 시공경험, 기술능력, 경영상태, 신인도 등을 종합적으로 평가하여 일정 기준을 통과한 자에게만 입찰 참가 자격을 부여하는 제도이다.", "rubric": [{"p": 2.0, "label": "개념: 부실공사 방지, 계약이행능력 업체 선별, 기준 통과자에게만 입찰참가자격 부여", "k": [["pq", "사전심사"]], "s": ["부실", "방지", "이행능력", "선별"]}, {"p": 0.75, "label": "평가분야1: 시공경험", "k": [["시공경험"]]}, {"p": 0.75, "label": "평가분야2: 기술능력", "k": [["기술능력"]]}, {"p": 0.75, "label": "평가분야3: 경영상태", "k": [["경영상태"]]}, {"p": 0.75, "label": "평가분야4: 신인도", "k": [["신인도"]]}], "explanation": "PQ심사 4대 평가분야(시공경험·기술능력·경영상태·신인도)를 세트로 암기하세요."}, {"no": 17, "type": "essay", "subject": "서술형", "title": "ISO 31000 조달 리스크 관리 6단계 프로세스 [서술형]", "question": "ISO 31000 표준에 기반한 공공조달 리스크 관리 프로세스의 6개 모듈을 순서대로 나열하시오.", "points": 5, "answer": "리스크 관리 프로세스는 1) 범위 및 상황 설정 → 2) 리스크 식별 → 3) 리스크 분석 → 4) 리스크 평가 → 5) 리스크 처리(대응) → 6) 모니터링 및 검토의 순서로 진행된다.", "rubric": [{"p": 5.0, "label": "6단계 순서: 범위·상황 설정 → 식별 → 분석 → 평가 → 처리 → 모니터링·검토", "seq": ["범위", "식별", "분석", "평가", "처리", "모니터링"], "s": [["범위", "상황", "맥락", "기준"], ["식별"], ["분석"], ["평가"], ["처리", "대응"], ["모니터링", "검토"]]}], "explanation": "ISO 31000 6개 모듈의 선후 관계(범위·상황설정→식별→분석→평가→처리→모니터링)를 확실히 익히세요."}, {"no": 18, "type": "essay", "subject": "서술형", "title": "식별된 리스크 처리(대응) 5대 전략 [서술형]", "question": "조달 리스크 평가 후 이를 통제하기 위한 리스크 처리(대응) 5대 방안(회피, 완화, 전이, 수용, 활용)의 개념을 각각 간략히 설명하시오.", "points": 5, "answer": "회피: 위험 발생 원인 자체를 제거하여 리스크를 원천 차단함. 완화: 리스크의 발생 가능성이나 손실 영향력을 허용 가능한 수준으로 낮춤. 전이: 보험 가입이나 하도급 등을 통해 리스크 부담을 제3자에게 넘김. 수용: 대응 비용이 손실보다 클 때 위험을 그대로 감수하고 비상계획을 준비함. 활용: 위험을 오히려 긍정적 기회(수익 창출 등)로 전환하여 활용함.", "rubric": [{"p": 1.0, "label": "회피: 위험 발생 원인을 제거하여 원천 차단", "k": [["회피"]], "s": ["제거", "원천", "차단"]}, {"p": 1.0, "label": "완화: 발생 가능성이나 손실 영향력을 허용 가능한 수준으로 낮춤", "k": [["완화", "경감"]], "s": ["가능성", "영향력", "낮춤"]}, {"p": 1.0, "label": "전이: 보험·하도급 등을 통해 위험 부담을 제3자에게 넘김", "k": [["전이", "이전", "전가"]], "s": ["보험", "하도급", "제3자"]}, {"p": 1.0, "label": "수용: 대응 비용이 손실보다 클 때 위험을 감수하고 비상계획 준비", "k": [["수용", "감수"]], "s": ["비상계획", "손실"]}, {"p": 1.0, "label": "활용: 위험을 긍정적 기회로 전환하여 활용", "k": [["활용"]], "s": ["기회", "긍정", "전환"]}], "explanation": "회피·완화·전이·수용·활용 5대 리스크 대응 전략의 개념을 서로 혼동하지 않도록 정리하세요."}, {"no": 19, "type": "essay", "subject": "서술형", "title": "공공조달 법적 체계의 위계 구조 [서술형]", "question": "공공조달의 법적 제도를 구성하는 법령의 위계 구조를 5단계로 구분하여 가장 상위 규범부터 순서대로 나열하시오.", "points": 5, "answer": "공공조달 법적 체계는 1) 최상위 헌법 → 2) 법률(국가계약법, 지방계약법, 조달사업법 등) → 3) 시행령(대통령령) → 4) 행정규칙/회계예규(기획재정부 계약예규 등) → 5) 개별 입찰공고 및 계약 특수조건(계약조항)의 5단계 위계로 구성된다.", "rubric": [{"p": 5.0, "label": "5단계 위계: 헌법 → 법률 → 시행령 → 예규(행정규칙) → 입찰공고·계약 특수조건", "seq": ["헌법", "법률", "시행령", "예규", "특수조건"], "s": [["헌법"], ["법률", "국가계약법", "지방계약법", "조달사업법"], ["시행령", "대통령령"], ["예규", "행정규칙", "회계예규"], ["특수조건", "계약조항", "입찰공고"]]}], "explanation": "헌법→법률→시행령→예규(행정규칙)→입찰공고·계약특수조건 순의 5단계 위계 구조를 암기하세요."}, {"no": 20, "type": "essay", "subject": "서술형", "title": "부정당업자 제재 처분의 효력 범위 [서술형]", "question": "계약 불이행, 담합, 허위서류 제출 등 불공정행위로 조달청이나 발주기관으로부터 '부정당업자 입찰참가자격 제한' 처분을 받았을 때, 이 처분이 미치는 효력의 범위를 행정기관 및 공공기관 측면에서 서술하시오.", "points": 5, "answer": "부정당업자 제재 처분을 받으면 해당 처분을 내린 기관의 입찰에만 참여하지 못하는 것이 아니라, 국가계약법 및 지방계약법 등 공공계약 법령이 적용되는 국가, 모든 지방자치단체, 교육청, 공공기관(공기업/준정부기관)의 전체 공공 입찰에 최장 2년간 참가가 전면 제한된다.", "rubric": [{"p": 2.0, "label": "처분을 내린 기관에 국한되지 않고 전체 공공 입찰로 효력이 확대", "k": [["전체", "전면"]], "s": ["해당기관만", "아니라", "확대"]}, {"p": 2.0, "label": "적용범위: 국가·모든 지방자치단체·교육청·공공기관(공기업/준정부기관)", "k": [["국가"], ["지방자치단체", "지자체"], ["공공기관", "공기업", "준정부기관"]], "s": ["교육청"]}, {"p": 1.0, "label": "제한기간: 최장 2년간 참가 제한", "k": [["2년"]]}], "explanation": "부정당업자 제재는 처분기관 한정이 아니라 국가·지자체·교육청·공공기관 전체 공공 입찰에 최장 2년간 적용됩니다."}]}</script>
+<script>
+window.SITE = {
+  messages: { pass: "모의고사 합격을 축하합니다.", fail: "조금만 더 분발해주세요." },
+  grading: {
+    softMany: 2, softManyRate: 0.7, softOneRate: 0.3, groupPartRate: 0.4,
+    suppFull: 0.5, keyOnlyRate: 0.83,
+    auto: { full: 0.5, fullRate: 1.0, mid: 0.3, midRate: 0.8, low: 0.15, lowRate: 0.5 }
+  }
+};
+</script>
+<script>
+/* =====================================================================
+ * 모의고사 공통 채점 엔진 (브라우저/Node 공용)
+ * ---------------------------------------------------------------------
+ * 문항 유형
+ *   essay  : 서술형. rubric(채점요소)이 있으면 그 기준으로, 없으면 모범답안(answer)에서
+ *            자동으로 채점요소를 만들어 채점
+ *   short  : 단답형. parts[] 소문항별로 keys(인정 답) 포함 여부 채점
+ *   choice : 객관식. choices[] 와 answer(1부터 시작하는 번호, 복수정답은 배열)
+ *
+ * 채점 단계 (서술형)
+ *   1) 정확한 핵심 키워드(rubric.k)가 있으면            → 배점 100%
+ *      (단, 보조 표현 rubric.s 가 있는데 suppFull 비율 미만만 쓰였으면
+ *       keyOnlyRate~100% 사이 비례 — 핵심어만 얹은 불완전 답안 방지)
+ *   2) 없지만 유사 표현(rubric.s)이 softMany개 이상이면   → softManyRate
+ *      1개면                                           → softOneRate
+ *   3) rubric이 없으면 모범답안을 문장 단위로 나눠 핵심어 포함 비율로 자동 채점
+ * ===================================================================== */
+(function (root) {
+  "use strict";
+
+  const DEFAULT_GRADING = {
+    softMany: 2, softManyRate: 0.7, softOneRate: 0.3, groupPartRate: 0.4,
+    suppFull: 0.5, keyOnlyRate: 0.83,
+    auto: { full: 0.5, fullRate: 1.0, mid: 0.3, midRate: 0.8, low: 0.15, lowRate: 0.5 }
+  };
+
+  const round1 = (n) => Math.round(n * 10) / 10;
+  const round2 = (n) => Math.round(n * 100) / 100;
+
+  /** 비교용 정규화: 공백·쉼표 제거, 소문자화, 전각 % 통일 */
+  const normalize = (s) => String(s == null ? "" : s)
+    .toLowerCase()
+    .replace(/％/g, "%").replace(/[，,]/g, "")
+    .replace(/퍼센트|프로/g, "%")
+    .replace(AMOUNT_RE, amountToDigits)
+    .replace(/\s+/g, "");
+
+  /** 금액 표기 통일: "12백만원"·"1억2000만"·"3.5억"·"1천2백만" 처럼 한글 단위가 섞인 숫자를
+   *  아라비아 숫자(예: 12000000)로 바꿔서, 키워드·답안이 표기 방식과 상관없이 일치하도록 한다.
+   *  (공백으로 떨어진 뒤의 숫자는 단위가 붙어 있을 때만 같은 금액으로 이어 붙인다.) */
+  const UNIT = { "십": 10, "백": 100, "천": 1000, "만": 1e4, "억": 1e8, "조": 1e12 };
+  const AMOUNT_RE = /\d+(?:\.\d+)?\s*[억만천백십](?:(?:\s*\d+(?:\.\d+)?)?\s*[억만천백십])*(?:\d+(?:\.\d+)?(?![\d.]|\s*[억만천백십]))?/g;
+  function amountToDigits(m) {
+    let total = 0, section = 0, cur = null;
+    const toks = m.match(/\d+(?:\.\d+)?|[억만천백십]/g);
+    for (const t of toks) {
+      if (/\d/.test(t)) { cur = parseFloat(t); continue; }
+      const u = UNIT[t];
+      if (u < 1e4) { section += (cur == null ? 1 : cur) * u; cur = null; }
+      else {
+        if (cur != null) section += cur;
+        if (section === 0) section = 1;
+        total += section * u; section = 0; cur = null;
+      }
+    }
+    total += section + (cur == null ? 0 : cur);
+    return String(Math.round(total));
+  }
+
+  /* ---------- 핵심어 추출 (자동 채점용) ---------- */
+  const STOP = new Set(["등", "및", "또는", "대한", "위한", "통해", "따라", "경우", "있는", "하는", "한다", "이다",
+    "때문", "것이다", "이를", "그리고", "하여", "있다", "된다", "해당", "각각", "모두", "대해", "관한", "같은", "또한"]);
+  const JOSA = /(으로서|으로써|에서는|에게는|으로|에서|에게|까지|부터|처럼|보다|이다|한다|된다|하는|하여|하고|이며|하며|에는|에도|이나|이란|라는|라고|과|와|은|는|이|가|을|를|의|에|도|로|만|며)$/;
+
+  function extractTerms(text) {
+    let s = String(text || "");
+    const c = s.indexOf(":");
+    if (c > 0 && c <= 30) s = s.slice(c + 1);              // "정의:" 같은 머리말 제거
+    s = s.replace(/(\d),(?=\d)/g, "$1").replace(/[①②③④⑤⑥⑦⑧⑨⑩➔→]/g, " ");
+    const toks = s.match(/[가-힣A-Za-z0-9%.]+/g) || [];
+    const out = [], seen = new Set();
+    for (let t of toks) {
+      t = t.replace(/^\.+|\.+$/g, "");
+      if (!t) continue;
+      if (/^\d{1,2}$/.test(t)) continue;                    // 번호(1, 2 ...) 제외
+      if (/[가-힣]/.test(t)) {
+        const stripped = t.replace(JOSA, "");
+        if (stripped.length >= 2) t = stripped;
+      }
+      if (t.length < 2 && !/%/.test(t)) continue;
+      if (STOP.has(t)) continue;
+      const n = normalize(t);
+      if (seen.has(n)) continue;
+      seen.add(n); out.push(t);
+    }
+    return out;
+  }
+
+  /** 답안에 키워드가 있는지. 숫자만으로 된 키워드("4억"→400000000, "5" 등)는 앞뒤에 다른 숫자가
+   *  붙어 있으면 인정하지 않는다. (예: 정답 4억에 40억·15를 쓴 경우를 걸러냄) */
+  function has(t, n) {
+    if (/^\d+(?:\.\d+)?$/.test(n)) {
+      const tail = n.includes(".") ? "0*(?!\\d)" : "(?!\\d)";          // 소수는 19.5 = 19.5000
+      const re = new RegExp("(?<!\\d)(?<!\\d\\.)" + n.replace(/\./g, "\\.") + tail);
+      return re.test(t);
+    }
+    return t.includes(n);
+  }
+
+  /** 핵심어가 답안에 있는지 (어미 변화를 고려해 앞부분 일치도 인정) */
+  function termHit(tNorm, term) {
+    const n = normalize(term);
+    if (!n) return false;
+    if (has(tNorm, n)) return true;
+    if (/[가-힣]/.test(n)) {
+      if (n.length >= 3 && tNorm.includes(n.slice(0, -1))) return true;
+      if (n.length >= 5 && tNorm.includes(n.slice(0, -2))) return true;
+    }
+    return false;
+  }
+
+  /** 모범답안 → 자동 채점요소 */
+  function autoRubric(answer, points) {
+    const lines = String(answer || "")
+      .replace(/[①②③④⑤⑥⑦⑧⑨⑩]/g, "\n")
+      .split(/\n+/)
+      .flatMap(l => l.split(/(?<=[다요음임함]\.)\s+|;\s*/))
+      .map(l => l.replace(/^\s*(\d+[.)]|\(\d+\)|[-•*])\s*/, "").trim())
+      .filter(Boolean);
+    const clauses = lines.map(l => ({ label: l, terms: extractTerms(l) })).filter(c => c.terms.length >= 2);
+    if (!clauses.length) return [];
+    const totalW = clauses.reduce((s, c) => s + c.terms.length, 0);
+    return clauses.map(c => ({
+      label: c.label.length > 60 ? c.label.slice(0, 58) + "…" : c.label,
+      terms: c.terms,
+      p: round2(points * c.terms.length / totalW)
+    }));
+  }
+
+  function softHits(t, words) {
+    const seen = new Set();
+    (words || []).forEach(w => { const n = normalize(w); if (n && t.includes(n)) seen.add(n); });
+    return seen.size;
+  }
+
+  /** 연산기호(×÷+−*)가 숫자 2개 이상과 함께 등장하면 산식(풀이)을 보여준 것으로 본다.
+   *  한국어 산식은 "600,000,000원 × 지수조정률 5%"처럼 기호와 다음 숫자 사이에 단어가
+   *  끼는 경우가 대부분이라 숫자-기호-숫자가 바로 붙어 있는지는 보지 않는다.
+   *  [풀이] 채점요소는 이 증거가 전혀 없으면(=답만 나열) 점수를 주지 않는다 — 문항 라벨을 그대로
+   *  베낀 답안이 우연히 보조 키워드와 겹쳐 부분점수를 받는 것을 막기 위함. */
+  const OP_RE = /[×÷+\-−*]/;
+  function hasCalcWork(text) {
+    const s = String(text || "");
+    if (!OP_RE.test(s)) return false;
+    const nums = s.match(/[0-9][0-9,]*(?:\.[0-9]+)?/g) || [];
+    return nums.length >= 2;
+  }
+
+  /* ---------- 서술형 ---------- */
+  function gradeEssay(q, text, cfg) {
+    const g = cfg;
+    const t = normalize(text);
+    const showedWork = hasCalcWork(text);
+    const items = (q.rubric && q.rubric.length) ? q.rubric : autoRubric(q.answer, q.points);
+    const detail = items.map(item => {
+      let rate = 0, level = "miss";
+      const isProcessItem = /^\[풀이\]/.test(item.label || "");
+      if (t.length > 0 && !(isProcessItem && !showedWork)) {
+        const hasExplicit = item.seq || (item.k && item.k.length);
+        if (hasExplicit) {
+          let strict;
+          if (item.seq) {                                    // 순서까지 맞아야 하는 항목
+            let pos = -1; strict = true;
+            for (const kw of item.seq) {
+              const i = t.indexOf(normalize(kw), pos + 1);
+              if (i < 0) { strict = false; break; }
+              pos = i;
+            }
+          } else {                                           // 그룹 AND, 그룹 안은 OR
+            strict = item.k.every(group => group.some(kw => has(t, normalize(kw))));
+          }
+          if (strict) {
+            rate = 1; level = "full";
+            // 완결성 검사: 핵심 키워드 한두 개만 맞고 보조 표현(s)이 거의 없으면 만점 대신 감점한다.
+            // s의 suppFull 비율 이상을 충족하면 만점, 미달이면 keyOnlyRate ~ 1.0 사이에서 비례 부여.
+            if (!item.seq && item.s && item.s.length) {
+              const total = new Set(item.s.map(normalize).filter(Boolean)).size;
+              const sr = total ? softHits(t, item.s) / total : 1;
+              // 보조 표현이 모범답안과 다른 어휘로 적힌 문항이 있어, 모범답안 자신의 충족률을 상한으로 삼는다
+              // (모범답안은 항상 만점)
+              const ref = total ? softHits(normalize(q.answer), item.s) / total : 1;
+              const need = Math.min(g.suppFull, ref);
+              if (sr < need) {
+                rate = g.keyOnlyRate + (1 - g.keyOnlyRate) * (sr / need);
+                level = "part";
+              }
+            }
+          }
+          else if (item.seq && Array.isArray(item.s)) {      // 순서 무관 일치 비율
+            const found = item.s.filter(grp => grp.some(kw => t.includes(normalize(kw)))).length;
+            if (found > 0) { rate = (found / item.s.length) * g.softManyRate; level = "part"; }
+          } else {
+            // 설명·방안형(키워드 묶음이 여럿)은 맞는 묶음 비율만큼 부분점수. 숫자가 든 묶음을 놓치면 이 부분점수는 없다.
+            if (!item.seq && item.k && item.k.length > 1) {
+              const miss = item.k.filter(grp => !grp.some(kw => has(t, normalize(kw))));
+              if (!miss.some(grp => grp.some(kw => /\d/.test(kw)))) {
+                const r = ((item.k.length - miss.length) / item.k.length) * (g.groupPartRate || 0);
+                if (r > rate) { rate = r; level = "part"; }
+              }
+            }
+            if (item.s && item.s.length) {
+              const n = softHits(t, item.s);
+              let r = 0;
+              if (n >= g.softMany) r = g.softManyRate;
+              else if (n >= 1) r = g.softOneRate;
+              if (r > rate) { rate = r; level = "part"; }
+            }
+          }
+        } else {                                             // 키워드 없는 항목: 핵심어 비율로 자동 판정
+          const terms = item.terms || extractTerms(item.label);
+          if (terms.length) {
+            const ratio = terms.filter(w => termHit(t, w)).length / terms.length;
+            const a = g.auto;
+            if (ratio >= a.full) { rate = a.fullRate; level = "full"; }
+            else if (ratio >= a.mid) { rate = a.midRate; level = "part"; }
+            else if (ratio >= a.low) { rate = a.lowRate; level = "part"; }
+          }
+        }
+      }
+      return { label: item.label, p: round1(item.p), got: round1(item.p * rate), level };
+    });
+    const score = Math.min(q.points, detail.reduce((s, d) => s + d.got, 0));
+    return { score: round1(score), detail };
+  }
+
+  /* ---------- 단답형 ---------- */
+  function autoKeys(answer) {
+    const a = String(answer || "");
+    const num = a.replace(/(\d),(?=\d)/g, "$1").match(/\d+(\.\d+)?/);
+    const keys = [normalize(a)];
+    if (num) keys.push(num[0].replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""));
+    return keys;
+  }
+  function gradeShort(q, arr) {
+    const per = q.points / q.parts.length;
+    const detail = q.parts.map((p, j) => {
+      const t = normalize((arr || [])[j]);
+      const keys = (p.keys && p.keys.length) ? p.keys : autoKeys(p.answer);
+      const hit = t.length > 0 && keys.some(k => k && has(t, normalize(k)));
+      return { label: `${p.label} → ${p.answer}`, p: round1(per), got: hit ? round1(per) : 0, level: hit ? "full" : "miss" };
+    });
+    const hits = detail.filter(d => d.level === "full").length;
+    return { score: round1(Math.min(q.points, hits * per)), detail };
+  }
+
+  /* ---------- 객관식 ---------- */
+  function toSet(v) { return new Set([].concat(v == null ? [] : v).map(Number).filter(n => !isNaN(n))); }
+  function gradeChoice(q, ans) {
+    const right = toSet(q.answer), mine = toSet(ans);
+    const ok = right.size === mine.size && [...right].every(x => mine.has(x));
+    return { score: ok ? q.points : 0, detail: [{ label: "정답 선택", p: q.points, got: ok ? q.points : 0, level: ok ? "full" : "miss" }] };
+  }
+
+  /* ---------- 문항 기본값 ---------- */
+  function normalizeExam(exam) {
+    const dp = exam.defaultPoints || 5;
+    exam.questions.forEach((q, i) => {
+      q.no = q.no || i + 1;
+      q.type = q.type || "essay";
+      q.points = Number(q.points) || dp;
+      if (!q.subject) q.subject = "전체";
+    });
+    exam.pass = Object.assign({ percent: 60, subjectMinPercent: 0 }, exam.pass || {});
+    return exam;
+  }
+
+  function mergeGrading(cfg) {
+    const c = cfg || {};
+    return Object.assign({}, DEFAULT_GRADING, c, { auto: Object.assign({}, DEFAULT_GRADING.auto, c.auto || {}) });
+  }
+
+  /* ---------- 단일 문항 채점 (중간 확인용) ---------- */
+  function gradeQuestion(q, answer, gradingCfg) {
+    const cfg = mergeGrading(gradingCfg);
+    const r = q.type === "short" ? gradeShort(q, answer)
+      : q.type === "choice" ? gradeChoice(q, answer)
+      : gradeEssay(q, answer, cfg);
+    return { no: q.no, subject: q.subject, max: q.points, score: r.score, detail: r.detail };
+  }
+
+  /* ---------- 전체 채점 ---------- */
+  function gradeExam(exam, answers, gradingCfg) {
+    const cfg = mergeGrading(gradingCfg);
+    normalizeExam(exam);
+    const items = exam.questions.map((q, i) => {
+      const a = answers[i];
+      const r = q.type === "short" ? gradeShort(q, a)
+        : q.type === "choice" ? gradeChoice(q, a)
+        : gradeEssay(q, a, cfg);
+      return { no: q.no, subject: q.subject, max: q.points, score: r.score, detail: r.detail };
+    });
+    const total = round1(items.reduce((s, x) => s + x.score, 0));
+    const max = items.reduce((s, x) => s + x.max, 0);
+    const subjMap = new Map();
+    items.forEach(x => {
+      const s = subjMap.get(x.subject) || { name: x.subject, score: 0, max: 0 };
+      s.score += x.score; s.max += x.max; subjMap.set(x.subject, s);
+    });
+    const subjects = [...subjMap.values()].map(s => ({ name: s.name, score: round1(s.score), max: s.max }));
+    const percent = max ? total / max * 100 : 0;
+    const subjFail = exam.pass.subjectMinPercent > 0 &&
+      subjects.some(s => s.max && s.score / s.max * 100 < exam.pass.subjectMinPercent);
+    const pass = percent >= exam.pass.percent && !subjFail;
+    return { items, total, max, percent: round1(percent), subjects, pass, subjFail };
+  }
+
+  /* ---------- 표시용: 모범답안 텍스트 ---------- */
+  function modelAnswerText(q) {
+    if (q.type === "short") return q.parts.map(p => `${p.label} ${p.answer}`).join("\n");
+    if (q.type === "choice") return [...toSet(q.answer)].map(n => `${n}번 ${q.choices[n - 1] || ""}`).join("\n");
+    return q.answer || "";
+  }
+  function userAnswerText(q, a) {
+    if (q.type === "short") return q.parts.map((p, j) => `${p.label} ${(a && a[j]) || "-"}`).join("\n");
+    if (q.type === "choice") { const s = [...toSet(a)]; return s.length ? s.map(n => `${n}번 ${q.choices[n - 1] || ""}`).join("\n") : ""; }
+    return a || "";
+  }
+  function isBlank(q, a) {
+    if (q.type === "short") return !a || a.every(v => !String(v || "").trim());
+    if (q.type === "choice") return toSet(a).size === 0;
+    return !String(a || "").trim();
+  }
+
+  const api = { DEFAULT_GRADING, normalize, extractTerms, autoRubric, gradeExam, gradeQuestion, normalizeExam, mergeGrading,
+    modelAnswerText, userAnswerText, isBlank, round1 };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  root.ExamEngine = api;
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script>
+/* =====================================================================
+ * 1회용 채점기 (오프라인 전용)
+ *   - 문제·정답·해설은 이 파일 안의 #exam-data 에 들어 있습니다.
+ *   - 외부 서버·구글시트로 아무것도 보내지 않습니다.
+ *   - 브라우저 저장소(localStorage·sessionStorage·쿠키)를 쓰지 않습니다.
+ * ===================================================================== */
+(function () {
+  "use strict";
+  const SITE = window.SITE || {};
+  const Eng = window.ExamEngine;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const app = $("#app");
+
+  function setHeader(title, sub) {
+    $("#siteTitle").textContent = title || "모의고사";
+    $("#siteSub").textContent = sub || "";
+    document.title = title || "모의고사";
+  }
+  function showError(msg) {
+    app.innerHTML = `<div class="card error">${msg}</div><div class="center"><a class="btn secondary" href="./">회차 목록으로</a></div>`;
+  }
+
+  /* ---------- 시험 ---------- */
+  let exam, examId, timerId = null, submitting = false;
+
+  function loadEmbedded() {
+    return JSON.parse($("#exam-data").textContent);
+  }
+
+  function renderExam() {
+    try { exam = loadEmbedded(); }
+    catch (e) { return showError("문제 데이터를 읽지 못했습니다."); }
+    examId = exam.id || "exam";
+    Eng.normalizeExam(exam);
+    setHeader(exam.title, exam.subtitle);
+
+    const multi = exam.questions.some(q => q.type === "choice");
+    let html = `<div class="card notice"><b>응시 안내</b><ul>
+      <li>각 문항에 답안을 작성한 뒤 맨 아래 <b>[답안 제출]</b>을 누르면 자동 채점됩니다.</li>
+      <li>서술형은 모범답안의 <b>핵심 채점요소</b> 포함 여부로 채점합니다. 정확한 용어가 없어도 <b>같은 취지의 표현</b>이 있으면 부분점수를 줍니다.</li>
+      <li>단답형은 소문항별로 채점합니다. 숫자는 단위까지 쓰세요(예: 3,000만 원, 0.05%).</li>
+      ${multi ? "<li>객관식은 보기를 선택하세요.</li>" : ""}
+      <li>합격 기준: 총점 ${exam.pass.percent}% 이상${exam.pass.subjectMinPercent ? `, 과목별 ${exam.pass.subjectMinPercent}% 이상` : ""}${exam.timeLimitMin ? ` · 제한시간 ${exam.timeLimitMin}분` : ""}</li>
+      <li>채점은 이 브라우저 안에서만 합니다. 답안과 점수를 외부로 보내지 않습니다.</li>
+      <li>답안은 어디에도 저장하지 않습니다. 새로고침하면 지워지니 주의하세요.</li></ul></div>`;
+
+    let prevSection = null;
+    exam.questions.forEach(q => {
+      if (q.section && q.section !== prevSection) html += `<div class="section-title">${esc(q.section)}</div>`;
+      prevSection = q.section || prevSection;
+      const no = String(q.no).padStart(2, "0");
+      const typeLabel = q.type === "short" ? "단답형" : q.type === "choice" ? "객관식" : "약술형";
+      html += `<div class="card" id="q${q.no}"><div class="q-head"><span class="q-no">문제 ${no}</span>
+        ${q.title ? `<span class="q-title">${esc(q.title)}</span>` : ""}
+        <span class="tag">${typeLabel} · ${q.points}점</span>${q.subject && q.subject !== "전체" ? `<span class="tag">${esc(q.subject)}</span>` : ""}</div>
+        <div class="q-text">${esc(q.question)}</div>`;
+      if (q.type === "short") {
+        q.parts.forEach((p, j) => {
+          html += `<div class="short-part"><label for="a${q.no}_${j}">${esc(p.label)}</label>
+            <input type="text" id="a${q.no}_${j}" data-q="${q.no}" autocomplete="off"></div>`;
+        });
+      } else if (q.type === "choice") {
+        const isMulti = Array.isArray(q.answer) && q.answer.length > 1;
+        q.choices.forEach((c, j) => {
+          html += `<label class="choice"><input type="${isMulti ? "checkbox" : "radio"}" name="a${q.no}" value="${j + 1}" data-q="${q.no}">
+            <span>${esc(c)}</span></label>`;
+        });
+        if (isMulti) html += '<div class="meta">복수 정답 문항입니다.</div>';
+      } else {
+        html += `<textarea id="a${q.no}" data-q="${q.no}" placeholder="답안을 작성하세요."></textarea>
+          <div class="meta"><span id="len${q.no}">0</span>자</div>`;
+      }
+      html += `<div class="meta" style="text-align:left;margin-top:10px">
+          <button class="btn secondary small" type="button" data-check="${q.no}">이 문제 중간 확인</button></div>
+        <div id="interim${q.no}"></div></div>`;
+    });
+    html += `<div class="center" style="margin-top:24px"><p id="unansweredWarn" class="notice hidden"></p>
+      <button class="btn" id="submitBtn" type="button">답안 제출</button></div>`;
+    app.innerHTML = html;
+
+    app.removeEventListener("input", onInput);
+    app.removeEventListener("click", onExamClick);
+    app.addEventListener("input", onInput);
+    app.addEventListener("click", onExamClick);
+    $("#submitBtn").addEventListener("click", () => onSubmit(false));
+    startTimer();
+  }
+
+  function onExamClick(e) {
+    const btn = e.target.closest("[data-check]");
+    if (btn) onInterimCheck(Number(btn.dataset.check));
+  }
+
+  function onInterimCheck(no) {
+    const q = exam.questions.find(x => x.no === no);
+    if (!q) return;
+    const answer = collectOneAnswer(q);
+    const it = Eng.gradeQuestion(q, answer, SITE.grading);
+    const box = $("#interim" + no);
+    box.innerHTML = `<div class="interim-box"><div class="q-head"><b>중간 확인 결과</b><span class="q-score">${it.score} / ${it.max}점</span></div>
+      ${reviewBodyHtml(q, answer, it)}</div>`;
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function reviewBodyHtml(q, answer, it) {
+    const mine = Eng.userAnswerText(q, answer);
+    const empty = Eng.isBlank(q, answer);
+    const rub = (it.detail || []).map(d => `<li class="${d.level === "full" ? "hit" : d.level === "part" ? "partial" : "miss"}">
+      <span class="mark">${d.level === "full" ? "✓" : d.level === "part" ? "△" : "✗"}</span>
+      <span>${esc(d.label)}${d.level === "part" ? " (유사 표현 인정)" : ""}</span><span class="pt">${d.got} / ${d.p}</span></li>`).join("");
+    return `<div class="cmp"><div class="box mine"><h4>내 답안</h4>${empty ? '<span class="empty">(미작성)</span>' : esc(mine)}</div>
+      <div class="box model"><h4>모범 답안</h4>${esc(Eng.modelAnswerText(q))}</div></div>
+      ${q.type === "choice" ? "" : `<ul class="rubric">${rub}</ul>`}
+      ${q.explanation ? `<div class="box exp"><b>해설</b> ${esc(q.explanation)}</div>` : ""}`;
+  }
+
+  function onInput(e) {
+    if (e.target.tagName === "TEXTAREA") $("#len" + e.target.dataset.q).textContent = e.target.value.length;
+  }
+
+  /* ---------- 답안 수집 ---------- */
+  function collectOneAnswer(q) {
+    if (q.type === "short") return q.parts.map((_, j) => $(`#a${q.no}_${j}`).value.trim());
+    if (q.type === "choice") {
+      const v = [...document.querySelectorAll(`input[name="a${q.no}"]:checked`)].map(i => Number(i.value));
+      return Array.isArray(q.answer) && q.answer.length > 1 ? v : (v[0] != null ? v[0] : null);
+    }
+    return $(`#a${q.no}`).value.trim();
+  }
+  function collectAnswers() { return exam.questions.map(collectOneAnswer); }
+
+  /* ---------- 타이머 ---------- */
+  function startTimer() {
+    const bar = $("#timerBar");
+    if (!exam.timeLimitMin) { bar.classList.add("hidden"); return; }
+    const start = Date.now();
+    const end = start + exam.timeLimitMin * 60000;
+    bar.classList.remove("hidden");
+    const tick = () => {
+      const left = Math.max(0, end - Date.now());
+      const m = Math.floor(left / 60000), s = Math.floor(left % 60000 / 1000);
+      bar.textContent = `남은 시간 ${m}:${String(s).padStart(2, "0")}`;
+      bar.classList.toggle("low", left < 5 * 60000);
+      if (left <= 0) { clearInterval(timerId); onSubmit(true); }
+    };
+    tick(); timerId = setInterval(tick, 1000);
+  }
+  function stopTimer() {
+    if (timerId) clearInterval(timerId);
+    $("#timerBar").classList.add("hidden");
+  }
+
+  /* ---------- 제출 (브라우저 안에서만 채점) ---------- */
+  function onSubmit(force) {
+    if (submitting) return;
+    const answers = collectAnswers();
+    const blank = exam.questions.filter((q, i) => Eng.isBlank(q, answers[i]) || (q.type === "short" && answers[i].some(v => !v))).map(q => q.no);
+    const warn = $("#unansweredWarn");
+    if (!force && blank.length && warn.dataset.confirmed !== "1") {
+      warn.textContent = `미작성(또는 일부 미작성) 문항: ${blank.join(", ")}번. 그대로 제출하려면 [답안 제출]을 한 번 더 누르세요.`;
+      warn.classList.remove("hidden"); warn.dataset.confirmed = "1"; return;
+    }
+    submitting = true; stopTimer();
+    const result = Eng.gradeExam(exam, answers, SITE.grading);
+    renderResult(answers, result);
+  }
+
+  /* ---------- 결과 ---------- */
+  function renderResult(answers, r) {
+    const msgs = Object.assign({ pass: "합격을 축하합니다.", fail: "조금만 더 분발해주세요." }, SITE.messages || {}, exam.messages || {});
+    let html = `<div class="card result-hero ${r.pass ? "pass" : "fail"}">
+      <div class="score">${r.total}<small> / ${r.max}점</small></div>
+      <div class="msg">${esc(r.pass ? msgs.pass : msgs.fail)}</div>
+      ${r.subjFail ? `<div class="notice" style="margin-top:6px">과목별 최소 점수(${exam.pass.subjectMinPercent}%) 미달 과목이 있습니다.</div>` : ""}</div>`;
+
+    if (r.subjects.length > 1) {
+      html += `<div class="card"><b>과목별 점수</b><table class="subj" style="margin-top:10px"><tr><th>과목</th><th class="num">점수</th><th class="num">만점</th><th class="num">득점률</th></tr>` +
+        r.subjects.map(s => {
+          const pct = s.max ? Math.round(s.score / s.max * 1000) / 10 : 0;
+          const bad = exam.pass.subjectMinPercent && pct < exam.pass.subjectMinPercent;
+          return `<tr><td>${esc(s.name)}</td><td class="num">${s.score}</td><td class="num">${s.max}</td><td class="num ${bad ? "subj-fail" : ""}">${pct}%${bad ? " (과락)" : ""}</td></tr>`;
+        }).join("") + "</table></div>";
+    }
+
+    html += `<div class="card"><b>문항별 점수</b> <span class="notice">(누르면 해당 문항으로 이동)</span><div class="grid" style="margin-top:12px">` +
+      r.items.map(it => {
+        const cls = it.score >= it.max ? "full" : it.score > 0 ? "mid" : "zero";
+        return `<a class="chip ${cls}" href="#r${it.no}">Q${String(it.no).padStart(2, "0")}<b>${it.score}</b></a>`;
+      }).join("") + "</div></div>";
+
+    html += '<div class="section-title">문항별 정답 비교 및 해설</div>';
+    exam.questions.forEach((q, i) => {
+      const it = r.items[i];
+      html += `<div class="card" id="r${q.no}"><div class="q-head"><span class="q-no">문제 ${String(q.no).padStart(2, "0")}</span>
+        ${q.title ? `<span class="q-title">${esc(q.title)}</span>` : ""}<span class="q-score">${it.score} / ${it.max}점</span></div>
+        <div class="q-text">${esc(q.question)}</div>
+        ${reviewBodyHtml(q, answers[i], it)}</div>`;
+    });
+    html += `<div class="actions"><button class="btn secondary" type="button" id="printBtn">결과 인쇄 / PDF 저장</button>
+      <button class="btn secondary" type="button" id="retryBtn">다시 풀기</button>
+      <a class="btn" href="./">다른 회차 선택</a></div>`;
+    app.innerHTML = html;
+    $("#printBtn").addEventListener("click", () => window.print());
+    $("#retryBtn").addEventListener("click", () => { submitting = false; renderExam(); window.scrollTo({ top: 0 }); });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  renderExam();
+})();
+
+</script>
+</body>
+</html>

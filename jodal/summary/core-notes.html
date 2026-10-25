@@ -2,15 +2,15 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="NaverBot" content="noindex, nofollow">
 <meta name="Yeti" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>공조사 필기 암기노트</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
 <style>
 /* Layout: 탭(암기노트·기출 대조) → 고정 필터 바 → 과목별 섹션, 행마다 주제 | 핵심(표·보완 포함) | 주의 3칸 */
 :root{
@@ -108,10 +108,9 @@ const txt=r=>(r||[]).map(x=>x.t).join('');
 const rich=r=>(r||[]).map(x=>{let s=esc(x.t);if(x.b)s=`<b>${s}</b>`;if(x.c)s=`<span style="color:${x.c}">${s}</span>`;return s}).join('');
 const TABS=[['note','암기노트'],['an','기출 대조 155']];
 let tab='note';
-try{const t=localStorage.getItem('tab');if(t&&TABS.some(x=>x[0]===t))tab=t}catch(e){}
 function tabs(){
   $('#tabs').innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" aria-selected="${k===tab}" data-k="${k}">${l}</button>`).join('');
-  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.k;try{localStorage.setItem('tab',tab)}catch(e){};tabs();render()});
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.k;tabs();render()});
   $('#sec').hidden=tab!=='note'; $('#onlyAdd').parentElement.hidden=tab!=='note';
 }
 const secKey=a=>{const m=a.match(/^\[(\d)(?:~\d)?과목\]|^\[(1~4)과목\]/);return a.startsWith('[0')?'0과목':a.startsWith('[1~4')?'공통':a.startsWith('[1')?'1과목':a.startsWith('[2')?'2과목':'3과목'};
