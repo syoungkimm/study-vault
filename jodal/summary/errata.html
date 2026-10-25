@@ -129,7 +129,15 @@
   }
   var pageNo = function (p) { var m = String(p || "").match(/\d+/); return m ? +m[0] : 1e6; };
   var bookIdx = function (b) { var i = BOOKS.indexOf(b); return i < 0 ? 99 : i; };
-  var isUrgent = function (t) { return t.isUrgent === true || String(t.is_urgent) === "1"; };
+  /* 원본 사이트와 같은 기준: 처리 완료(resolved)된 긴급 정오표만 */
+  var isUrgent = function (t) {
+    return t.status === "resolved" && (t.isUrgent === true || String(t.is_urgent) === "1");
+  };
+  /* 페이지 칸이 비었으면 수정 전 내용에서 "224페이지", "p.165" 같은 표기를 찾는다 */
+  function guessPage(text) {
+    var s = String(text || ""), m = s.match(/p\.?\s*\d+(?:\s*[~,·-]\s*\d+)*/i) || s.match(/\d+(?:\s*[~,·-]\s*\d+)*\s*(?:페이지|쪽)/);
+    return m ? m[0].trim() : "";
+  }
 
   /* 필요한 칸만 꺼낸다. 이름·이메일·작성자 칸은 읽지 않는다. */
   function toRows(tickets) {
@@ -144,8 +152,10 @@
       var list = Object.keys(nums).map(Number).sort(function (a, b) { return a - b; });
       if (!list.length) list = [0];
       list.forEach(function (n) {
+        var pg = f.page[n] || "", guessed = false;
+        if (!pg) { pg = guessPage(f.before[n]) || guessPage(f.loc[n]); guessed = !!pg; }
         out.push({
-          book: String(t.textbook || "").trim(), page: f.page[n] || "", loc: f.loc[n] || "",
+          book: String(t.textbook || "").trim(), page: pg, guessed: guessed, loc: f.loc[n] || "",
           before: f.before[n] || "", after: f.after[n] || "", reason: f.reason[n] || "",
           no: n, kind: t.suggestion_type || "", title: t.title || "",
           date: String(t.date || "").slice(0, 10), ticket: String(t.id || "")
@@ -194,7 +204,7 @@
         '<div class="tw"><table><thead><tr><th>페이지</th><th>위치</th><th>수정 전</th><th>수정 후</th><th>사유</th><th>반영일</th></tr></thead><tbody>' +
         g.map(function (r) {
           return "<tr>" +
-            '<td class="pg" data-l="페이지">' + esc(r.page || "-") + "</td>" +
+            '<td class="pg" data-l="페이지">' + esc(r.page || "-") + (r.guessed ? '<span class="sub">본문에서 찾음</span>' : "") + "</td>" +
             '<td data-l="위치">' + esc(r.loc || "-") + (r.title ? '<span class="sub">' + esc(r.title) + "</span>" : "") + "</td>" +
             '<td class="b" data-l="수정 전">' + esc(r.before) + "</td>" +
             '<td class="a" data-l="수정 후">' + esc(r.after) + "</td>" +
