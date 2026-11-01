@@ -30,7 +30,7 @@
 *{box-sizing:border-box}
 body{word-break:keep-all;margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
 .crumb{font-size:.9em;color:var(--muted);margin-bottom:8px}.crumb a{color:#3498db;text-decoration:none}
-.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;display:flex;flex-direction:column;gap:20px}
+.wrap{max-width:1360px;margin:0 auto;padding:28px 20px 60px;display:flex;flex-direction:column;gap:20px}
 h1{font-size:24px;margin:0;text-wrap:balance;letter-spacing:-.01em}
 .sub{color:var(--muted);margin:4px 0 0;font-size:14px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
@@ -43,7 +43,7 @@ h1{font-size:24px;margin:0;text-wrap:balance;letter-spacing:-.01em}
 .bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .legend{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px}
 .tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;min-width:960px}
+table{border-collapse:collapse;width:100%;min-width:1180px}
 th,td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
 thead th{position:sticky;top:0;background:var(--surface);font-size:13px;color:var(--muted);font-weight:500;z-index:1}
 tr.major td{background:var(--accent);color:var(--surface);font-weight:700;font-size:15px}
@@ -82,6 +82,11 @@ dialog#pv::backdrop{background:rgba(15,20,30,.6)}
 .pv-body canvas{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3);max-width:none}
 .pv-msg{color:#fff;font-size:15px;padding:40px 16px;text-align:center;line-height:1.7}
 @media (max-width:640px){dialog#pv{width:100vw;height:100%;max-height:100%;max-width:100vw;border-radius:0}.pv-body{padding:6px}.pv-tools .hide-s{display:none}}
+td.wr{width:260px;font-size:13px}
+.wr-i{display:block;margin-bottom:6px}
+.wr-i:last-child{margin-bottom:0}
+.bk{display:inline-block;font-size:11.5px;font-weight:700;padding:0 6px;border-radius:4px;margin-right:4px;color:var(--surface);background:var(--b)}
+.wr-s{color:var(--muted);display:block;line-height:1.4}
 @media (max-width:640px){
   .wrap{padding:20px 14px 48px}
   table{min-width:0}
@@ -92,7 +97,9 @@ dialog#pv::backdrop{background:rgba(15,20,30,.6)}
   tr.item td.code{display:inline-block;width:auto;margin-right:8px}
   tr.item td.st{display:inline-block;width:auto}
   tr.item td.loc::before{content:"교재 위치 ";color:var(--muted);font-size:12px}
-  tr.item td.pg::before{content:"쪽 ";color:var(--muted);font-size:12px}
+  tr.item td.wr::before{content:"필기 교재 ";color:var(--muted);font-size:12px}
+  tr.item td.wr:empty{display:none}
+  tr.item td.pg::before{content:"4권 쪽 ";color:var(--muted);font-size:12px}
   tr.item td:first-child{box-shadow:none}
   tr.row-gap{box-shadow:inset 3px 0 0 var(--gap)} tr.row-part{box-shadow:inset 3px 0 0 var(--part)} tr.row-ok{box-shadow:inset 3px 0 0 var(--ok)}
   tr.major td,tr.sub td{padding:8px 12px}
@@ -105,7 +112,7 @@ dialog#pv::backdrop{background:rgba(15,20,30,.6)}
   <header>
     <div class="crumb"><a href="../../">study-vault</a> / <a href="../">jodal</a> / <a href="./">summary</a> / 출제기준 맵핑</div>
     <h1>공공조달관리사 실기 출제기준–표준교재 맵핑</h1>
-    <p class="sub">출제기준(실기, 2026.03.01~2028.12.31) 세세항목 순서로 표준교재 『공공조달 관리실무』 쪽수를 맞췄습니다. 쪽수는 교재 인쇄 쪽수입니다.</p>
+    <p class="sub">출제기준(실기, 2026.03.01~2028.12.31) 세세항목 순서로 표준교재 『공공조달 관리실무』 쪽수를 맞췄습니다. 4권에 없거나 부족한 항목은 필기 표준교재 1~3권 쪽수로 보완했습니다. 쪽수는 모두 교재 인쇄 쪽수입니다.</p>
   </header>
 
   <section class="tiles" id="tiles" aria-label="수록 현황 요약"></section>
@@ -125,7 +132,7 @@ dialog#pv::backdrop{background:rgba(15,20,30,.6)}
 
   <div class="tablebox">
     <table>
-      <thead><tr><th>번호</th><th>세세항목(출제기준)</th><th>상태</th><th>교재 위치</th><th>쪽</th><th>비고 · 보충할 필기 출제기준</th></tr></thead>
+      <thead><tr><th>번호</th><th>세세항목(출제기준)</th><th>상태</th><th>교재 위치</th><th>쪽(4권)</th><th>보완: 필기 교재 1~3권</th><th>비고</th></tr></thead>
       <tbody id="tb"></tbody>
     </table>
   </div>
@@ -133,7 +140,7 @@ dialog#pv::backdrop{background:rgba(15,20,30,.6)}
   <div class="foot">
     <span>필기 출제기준 표기: 1과목 공공조달과 법제도 이해, 2과목 공공조달계획 수립 및 분석, 3과목 공공계약관리. 번호는 주요항목-세부항목-세세항목 순입니다.</span>
     <span>출제기준 원문 4-3의 세부항목명은 '계약 변경 관리하리'로 오타가 있습니다.</span>
-    <span>쪽수(파란 밑줄)를 누르면 교재의 해당 쪽이 팝업으로 열립니다.</span>
+    <span>쪽수(밑줄)를 누르면 해당 교재의 그 쪽이 팝업으로 열립니다. 1권 공공조달의 이해, 2권 공공조달 계획분석, 3권 공공계약관리, 4권 공공조달 관리실무입니다.</span>
     <span>계약금액 조정요건 등 현행 법령은 국가법령정보센터(law.go.kr)에서 확인하세요.</span>
   </div>
 </div>
@@ -294,20 +301,24 @@ const D=[
 ["8-2-4","출처·신뢰성 검토와 보고서 정리","part","2장 2절 · 1장 2절","75, 32","교차 검증과 목록정보 신뢰성 원칙만 있습니다. 출처 검토와 보고서 정리 방법은 없습니다.",1]
 ];
 
+const W={"1-1-1": [[1, "6장 1절 공공계약 법령", "323~346"], [1, "6장 3절 조달사업법령", "364~375"]], "1-1-2": [[3, "2장 1절 1.1 입찰참가자격 등록", "101~102"], [1, "6장 1절 1.3 계약 방법 규정", "331~337"]], "1-2-2": [[1, "7장 1절 변경등록 미이행 시 입찰 무효", "430~431"]], "1-3-3": [[1, "3장 2절 2.2 전자조달시스템 이용자", "160~161"]], "2-1-4": [[2, "3장 2절 입찰공고 법적 적정성", "106~109"]], "2-1-5": [[2, "3장 2절 법적 적정성", "106~109"], [2, "3장 3절 기술적 적정성", "110~114"], [2, "3장 4절 경제적 적정성", "115~131"]], "2-2-3": [[2, "3장 1절 1.2 수요 분석과 계획 수립", "98~105"]], "2-3-2": [[2, "3장 3절 기술적 적정성(내부 공급 역량)", "110~114"]], "3-2-3": [[2, "5장 2절 평가위원회 구성·이해 충돌 방지", "206~214"], [2, "2장 2절 평가위원회 구성", "69~70"]], "4-1-4": [[1, "6장 1절 1.6 계약 체결·이행 규정", "341~343"], [3, "1장 3절 3.6 계약보증금", "64~70"], [3, "1장 4절 4.3 지체상금", "75~76"]], "4-2-1": [[3, "1장 1절 1.1~1.2 계약관리 원칙·요소", "7~12"], [2, "1장 4절 4.1~4.2 계약관리계획", "34~35"]], "4-2-2": [[3, "1장 1절 1.3~1.4 착수 협의·착수", "13~14"], [2, "1장 4절 4.2 계약관리계획(CMP)", "35~36"]], "4-3-1": [[3, "1장 2절 2.2 물가변동 계약금액 조정", "18~30"], [3, "1장 2절 2.3 설계변경 계약금액 조정", "31~40"], [3, "1장 2절 2.4 기타 계약내용 변경", "41~43"]], "4-3-2": [[3, "1장 2절 2.1 변경계약 일반절차", "17"], [3, "1장 2절 2.2~2.4 요건별 조정 방법", "18~43"], [3, "4장 5절 5.2 공사 계약금액 조정", "324~329"]], "4-3-4": [[3, "1장 2절 2.2~2.3 물가변동·설계변경", "18~40"]], "4-3-5": [[3, "1장 2절 2.1 변경계약 일반절차", "17"], [2, "1장 4절 4.4 계약 변경 관리", "37"]], "4-4-4": [[3, "1장 2절 2.5~2.6 해제·해지, 손해배상", "44~48"], [1, "6장 2절 2.5 민법의 해제·해지", "355~357"], [1, "7장 2절 2.1 계약 해제·해지", "438~439"]], "5-1-2": [[3, "4장 5절 공사단계(대금·조정·시공평가)", "318~334"]], "5-1-3": [[3, "1장 1절 1.5 하도급계약 승인·변경", "15~16"], [3, "4장 5절 하도급 대가 직접 지급", "323"], [1, "6장 4절 4.4 하도급 관리의 전자적 처리", "381~382"]], "5-2-4": [[1, "3장 3절 3.1 종합쇼핑몰(단가계약)", "182~188"], [3, "3장 2절 MAS 절차·이행관리", "195~206"]], "5-3-2": [[3, "3장 1절 1.4 용역 이행과 계약관리", "191~194"]], "5-3-3": [[3, "1장 1절 1.5 하도급계약 승인·변경", "15~16"], [1, "6장 4절 4.4 하도급 관리의 전자적 처리", "381~382"]], "6-1-1": [[2, "6장 1절 1.2 범위·상황·기준", "249~250"], [2, "6장 2절 가. 조달사업 상황 설정", "255"]], "6-1-2": [[2, "6장 1절 1.3 가. 리스크 요인 식별", "250~251"], [2, "6장 2절 나·다. 위험 식별·원천", "255~258"]], "6-1-3": [[2, "6장 2절 2.1 공공조달 위험", "254"], [2, "6장 2절 다. 위험의 원천", "256~258"], [2, "6장 3절 3.2 단계별 위험", "265~273"]], "6-2-1": [[2, "6장 1절 1.2 다. 리스크 기준 설정", "250"], [2, "6장 1절 1.3 리스크 평가", "250~251"]], "6-2-2": [[2, "6장 2절 라. 위험성 분석(표 42 발생 가능성)", "258~259"]], "6-2-3": [[2, "6장 2절 표 43 결과·영향 판단기준", "259"]], "6-2-4": [[2, "6장 2절 표 44 위험 수준 분류표", "260"]], "6-2-5": [[2, "6장 2절 마. 위험 평가·우선순위 지정", "261"]], "6-3-1": [[2, "6장 1절 1.4 리스크 처리", "252"], [2, "6장 2절 바. 위험 처리(표 45)", "261~262"]], "6-3-2": [[2, "6장 1절 1.4 조치의 효과성 평가", "252"], [2, "6장 3절 3.1 일반적 리스크 관리(표 46)", "263~264"]], "6-3-3": [[2, "6장 2절 비상계획", "262~263"], [3, "1장 3절 3.5 계약 이행 위험관리", "63"]], "6-4-1": [[2, "6장 1절 1.5 모니터링과 검토", "253"], [2, "6장 3절 다. 모니터링과 검토", "264"]], "6-4-2": [[2, "6장 1절 1.5 모니터링과 검토", "253"], [3, "1장 3절 3.4 계약성과관리", "59~62"]], "6-4-3": [[2, "6장 1절 1.3 새로운 위험 징후", "251"], [2, "6장 1절 1.5 모니터링과 검토", "253"]], "6-4-4": [[2, "6장 1절 1.1 의사소통과 컨설팅", "248"], [2, "6장 1절 1.6 기록과 보고", "253"]], "7-1-1": [[1, "6장 1절 공공계약 법령", "323~346"], [1, "6장 5절 공기업·준정부기관 계약사무규칙", "384~395"], [1, "6장 6절 국가·지방계약법 차이", "396~410"]], "7-1-3": [[1, "7장 1절 1.2 유권해석과 감사 사례", "422~437"], [1, "6장 1절 판례(국가계약법의 성격)", "325~326"]], "7-2-1": [[2, "1장 4절 4.5 계약관리상 문제와 분쟁", "38~41"], [3, "1장 2절 2.7 분쟁해결 절차", "49~55"]], "7-2-2": [[1, "7장 1절 1.1 공공조달 분쟁 조정", "413~421"], [1, "6장 1절 1.7 이의신청과 분쟁조정", "344~346"], [2, "5장 5절 입찰 결과 분석·이의제기", "234~235"]], "7-2-3": [[1, "7장 1절 1.1 분쟁조정위원회(민간 전문가)", "413~421"], [3, "1장 2절 2.7 민사상 분쟁해결 수단", "49~55"]], "7-3-3": [[1, "4장 1절 전략적 공공조달", "233~237"], [1, "5장 1절 우선구매제도 개요", "269~277"]], "8-1-3": [[1, "3장 3절 나라장터 연계 계약관리 지원시스템", "182~201"]], "8-1-4": [[1, "6장 4절 4.2 전자입찰서 오류·취소 신청", "378~379"]], "8-2-4": [[2, "1장 2절 시장조사(정보 출처)", "15~28"], [2, "6장 1절 1.3 정보의 신뢰성", "251"]]};
+const BKC={1:"#2f7d6d",2:"#8a5a12",3:"#5b4aa3",4:"#2c6e9e"};
 const label={ok:"수록",part:"일부",gap:"공백"};
-function pgLinks(r){
-  if(!/\d/.test(r[4])) return r[4];
-  return r[4].split(/,\s*/).map(seg=>{
+function pgLinks(r,txt,book){
+  txt=txt||r[4]; book=book||4;
+  if(!/\d/.test(txt)) return txt;
+  return txt.split(/,\s*/).map(seg=>{
     const m=seg.match(/(\d+)(?:~(\d+))?/); if(!m) return seg;
     const a=+m[1], b=m[2]?+m[2]:a;
-    return `<button type="button" class="pgl" data-a="${a}" data-b="${b}" data-code="${r[0]}" data-name="${r[1].replace(/"/g,'&quot;')}" data-loc="${r[3]}">${seg}</button>`;
+    return `<button type="button" class="pgl" data-a="${a}" data-b="${b}" data-code="${r[0]}" data-name="${r[1].replace(/"/g,'&quot;')}" data-loc="${book===4?r[3]:""}" data-book="${book}">${seg}</button>`;
   }).join(", ");
 }
 const items=D.filter(Array.isArray);
 const cnt={ok:0,part:0,gap:0,pos:0};
 items.forEach(r=>{cnt[r[2]]++; if(r[6]) cnt.pos++;});
+const wcnt=items.filter(r=>W[r[0]]).length;
 document.getElementById("tiles").innerHTML=
- [["전체 세세항목",items.length,"var(--accent)"],["수록",cnt.ok,"var(--ok)"],["일부",cnt.part,"var(--part)"],["공백",cnt.gap,"var(--gap)"]]
+ [["전체 세세항목",items.length,"var(--accent)"],["수록",cnt.ok,"var(--ok)"],["일부",cnt.part,"var(--part)"],["공백",cnt.gap,"var(--gap)"],["1~3권으로 보완",wcnt,"#8a5a12"]]
  .map(t=>`<div class="tile" style="--c:${t[2]}"><b>${t[1]}</b><span>${t[0]}</span></div>`).join("");
 
 const tb=document.getElementById("tb");
@@ -318,11 +329,12 @@ function render(f){
     if(r.s){pendingS=r.s;return;}
     const show=f==="all"||r[2]===f;
     if(!show) return;
-    if(pendingM){html+=`<tr class="major"><td colspan="6">${pendingM}</td></tr>`;pendingM="";}
-    if(pendingS){html+=`<tr class="sub"><td colspan="6">${pendingS}</td></tr>`;pendingS="";}
+    if(pendingM){html+=`<tr class="major"><td colspan="7">${pendingM}</td></tr>`;pendingM="";}
+    if(pendingS){html+=`<tr class="sub"><td colspan="7">${pendingS}</td></tr>`;pendingS="";}
     const pos=r[6]?` <span class="pos">위치 다름</span>`:"";
-    const fill=r[7]?`<span class="fill">보충: ${r[7]}</span>`:"";
-    html+=`<tr class="item row-${r[2]}"><td class="code">${r[0]}</td><td>${r[1]}</td><td class="st"><span class="pill s-${r[2]}">${label[r[2]]}</span></td><td class="loc">${r[3]}${pos}</td><td class="pg">${pgLinks(r)}</td><td class="note">${r[5]}${fill}</td></tr>`;
+    const fill=r[7]?`<span class="fill">필기 출제기준: ${r[7].replace(/^필기\s*/,"")}</span>`:"";
+    const wr=(W[r[0]]||[]).map(w=>`<span class="wr-i"><span class="bk" style="--b:${BKC[w[0]]}">${w[0]}권</span>${pgLinks(r,w[2],w[0]).replace(/data-loc=""/g,`data-loc="${w[0]}권 ${w[1]}"`)}<span class="wr-s">${w[1]}</span></span>`).join("");
+    html+=`<tr class="item row-${r[2]}"><td class="code">${r[0]}</td><td>${r[1]}</td><td class="st"><span class="pill s-${r[2]}">${label[r[2]]}</span></td><td class="loc">${r[3]}${pos}</td><td class="pg">${pgLinks(r)}</td><td class="wr">${wr}</td><td class="note">${r[5]}${fill}</td></tr>`;
   });
   tb.innerHTML=html;
 }
@@ -334,26 +346,31 @@ render("all");
 </script>
 <script type="module">
 /* ===== 설정: 교재 PDF 경로만 바꾸면 됩니다 ===== */
-const PDF_URL = "textbook/standard-textbook.pdf";
-/* 교재 인쇄 쪽수와 PDF 쪽 번호의 차이. 현재 교재는 같으므로 0 */
+const BOOKS = {
+  1: {url:"textbook/vol1.pdf", name:"1권 공공조달의 이해"},
+  2: {url:"textbook/vol2.pdf", name:"2권 공공조달 계획분석"},
+  3: {url:"textbook/vol3.pdf", name:"3권 공공계약관리"},
+  4: {url:"textbook/standard-textbook.pdf", name:"4권 공공조달 관리실무"}
+};
+/* 교재 인쇄 쪽수와 PDF 쪽 번호의 차이. 현재 4권 모두 같으므로 0 */
 const PAGE_OFFSET = 0;
 
 const LIB = new URL("lib/pdfjs/", location.href).href;
-const PDF_ABS = () => new URL(PDF_URL, location.href).href;
+const abs = u => new URL(u, location.href).href;
 const $ = id => document.getElementById(id);
 const dlg=$("pv"), body=$("pv-body"), num=$("pv-num");
-let pdfjs=null, doc=null, loading=null, page=1, range=[1,1], zoom=1, task=null;
+let pdfjs=null, doc=null, book=4, docs={}, loads={}, page=1, range=[1,1], zoom=1, task=null;
 
-async function load(){
-  if(doc) return doc;
-  if(!loading) loading=(async()=>{
-    pdfjs = await import(LIB+"build/pdf.min.mjs");
-    pdfjs.GlobalWorkerOptions.workerSrc = LIB+"build/pdf.worker.min.mjs";
-    const t = pdfjs.getDocument({url:PDF_ABS(), wasmUrl:LIB+"wasm/", iccUrl:LIB+"iccs/",
+async function load(b){
+  if(docs[b]) return docs[b];
+  if(!loads[b]) loads[b]=(async()=>{
+    if(!pdfjs){ pdfjs = await import(LIB+"build/pdf.min.mjs");
+      pdfjs.GlobalWorkerOptions.workerSrc = LIB+"build/pdf.worker.min.mjs"; }
+    const t = pdfjs.getDocument({url:abs(BOOKS[b].url), wasmUrl:LIB+"wasm/", iccUrl:LIB+"iccs/",
       disableAutoFetch:true, disableStream:true});
-    doc = await t.promise; $("pv-tot").textContent="/ "+doc.numPages; num.max=doc.numPages; return doc;
+    docs[b] = await t.promise; return docs[b];
   })();
-  try{ return await loading; }catch(e){ loading=null; throw e; }
+  try{ return await loads[b]; }catch(e){ delete loads[b]; throw e; }
 }
 function msg(t){ body.innerHTML=`<div class="pv-msg">${t}</div>`; }
 async function render(){
@@ -361,7 +378,7 @@ async function render(){
   $("pv-prev").disabled=page<=1; $("pv-next").disabled=doc&&page>=doc.numPages;
   const inR = page>=range[0]&&page<=range[1];
   $("pv-range").textContent = range[0]===range[1] ? "" : (inR?`범위 ${range[0]}~${range[1]}쪽 중 ${page-range[0]+1}/${range[1]-range[0]+1}`:`범위 ${range[0]}~${range[1]}쪽 밖`);
-  $("pv-open").href = PDF_URL+"#page="+(page+PAGE_OFFSET);
+  $("pv-open").href = BOOKS[book].url+"#page="+(page+PAGE_OFFSET);
   const p = await doc.getPage(page+PAGE_OFFSET);
   const base = p.getViewport({scale:1});
   const avail = Math.max(200, body.clientWidth-28);
@@ -382,12 +399,13 @@ async function go(n){
 }
 async function openAt(btn){
   range=[+btn.dataset.a,+btn.dataset.b]; page=range[0]; zoom=1;
+  book=+(btn.dataset.book||4);
   $("pv-t").textContent=`${btn.dataset.code} ${btn.dataset.name}`;
-  $("pv-s").textContent=`${btn.dataset.loc} · ${btn.textContent}쪽`;
+  $("pv-s").textContent=`${BOOKS[book].name} · ${btn.dataset.loc?btn.dataset.loc.replace(/^\d권 /,"")+" · ":""}${btn.textContent}쪽`;
   if(!dlg.open) dlg.showModal();
-  if(!doc) msg("교재를 불러오는 중입니다…");
-  try{ await load(); await go(page); }
-  catch(e){ msg(`교재 PDF를 열지 못했습니다.<br><b>${PDF_URL}</b> 경로에 파일이 있는지 확인해 주세요.<br>내 컴퓨터에서 index.html을 바로 열면 작동하지 않습니다. README의 방법으로 여세요.`); }
+  if(!docs[book]) msg(`${BOOKS[book].name}을 불러오는 중입니다…`);
+  try{ doc=await load(book); $("pv-tot").textContent="/ "+doc.numPages; num.max=doc.numPages; await go(page); }
+  catch(e){ doc=null; msg(`${BOOKS[book].name} PDF를 열지 못했습니다.<br><b>${BOOKS[book].url}</b> 경로에 파일이 있는지 확인해 주세요.<br>내 컴퓨터에서 index.html을 바로 열면 작동하지 않습니다. README의 방법으로 여세요.`); }
 }
 document.addEventListener("click",e=>{ const b=e.target.closest(".pgl"); if(b) openAt(b); });
 $("pv-close").onclick=()=>dlg.close();
