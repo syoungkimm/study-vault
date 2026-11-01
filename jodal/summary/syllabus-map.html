@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="NaverBot" content="noindex, nofollow">
+<meta name="Yeti" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>공공조달관리사 실기 출제기준–교재 맵핑</title>
+<style>
+:root{
+  /* 출제기준 순서로 읽는 장부형 표. 상단 요약 → 필터 → 표 */
+  --paper:#f4f7f6; --surface:#ffffff; --ink:#2c3e50; --muted:#5d6676; --line:#dde1e8;
+  --accent:#2c6e9e;
+  --ok:#1f7a4d; --ok-bg:#e3f3ea; --part:#9a6200; --part-bg:#fdf1d8; --gap:#b3261e; --gap-bg:#fbe4e2; --pos:#6a3fb5; --pos-bg:#efe8fb;
+  --f-body:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  --f-mono:ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#12161d; --surface:#1a1f28; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3340; --accent:#7fb0f0;
+  --ok:#6fd39d; --ok-bg:#163326; --part:#f0c060; --part-bg:#3a2c10; --gap:#ff8a80; --gap-bg:#3d1a18; --pos:#c3a6ff; --pos-bg:#2a2140; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --paper:#12161d; --surface:#1a1f28; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3340; --accent:#7fb0f0;
+  --ok:#6fd39d; --ok-bg:#163326; --part:#f0c060; --part-bg:#3a2c10; --gap:#ff8a80; --gap-bg:#3d1a18; --pos:#c3a6ff; --pos-bg:#2a2140; color-scheme:dark;}
+*{box-sizing:border-box}
+body{word-break:keep-all;margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.crumb{font-size:.9em;color:var(--muted);margin-bottom:8px}.crumb a{color:#3498db;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px;display:flex;flex-direction:column;gap:20px}
+h1{font-size:24px;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:4px 0 0;font-size:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;border-left:4px solid var(--c)}
+.tile b{display:block;font-size:26px;font-variant-numeric:tabular-nums;color:var(--c)}
+.tile span{font-size:13px;color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.legend{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px}
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:960px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{position:sticky;top:0;background:var(--surface);font-size:13px;color:var(--muted);font-weight:500;z-index:1}
+tr.major td{background:var(--accent);color:var(--surface);font-weight:700;font-size:15px}
+tr.sub td{background:var(--paper);font-weight:700;font-size:14px}
+td.code{font-family:var(--f-mono);font-size:13px;white-space:nowrap;color:var(--muted)}
+td.pg{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+td.note{font-size:13.5px;color:var(--ink)}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.s-ok{color:var(--ok);background:var(--ok-bg)} .s-part{color:var(--part);background:var(--part-bg)} .s-gap{color:var(--gap);background:var(--gap-bg)}
+td.st{width:96px} td.loc{width:170px} td.pg{width:150px;white-space:normal} td.code{width:64px}
+.pos{white-space:nowrap;display:inline-block;margin-top:4px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700;color:var(--pos);background:var(--pos-bg)}
+.fill{display:block;margin-top:4px;font-size:12.5px;color:var(--gap)}
+tr.row-gap td:first-child{box-shadow:inset 3px 0 0 var(--gap)}
+tr.row-part td:first-child{box-shadow:inset 3px 0 0 var(--part)}
+tr.row-ok td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
+.foot{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.pgl{font:inherit;font-variant-numeric:tabular-nums;font-weight:500;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.pgl:hover{text-decoration-thickness:2px}
+.pgl:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+dialog#pv{border:0;padding:0;width:min(980px,96vw);height:min(94vh,1200px);max-height:94vh;border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden}
+dialog#pv[open]{display:flex;flex-direction:column}
+dialog#pv::backdrop{background:rgba(15,20,30,.6)}
+.pv-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line)}
+.pv-title{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pv-title b{font-size:15px}
+.pv-title span{font-size:13px;color:var(--muted)}
+.pv-tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--paper)}
+.pv-tools button,.pv-tools a,.pv-x{font:inherit;font-size:14px;min-height:34px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.pv-tools button:disabled{opacity:.4;cursor:default}
+.pv-tools button:focus-visible,.pv-tools a:focus-visible,.pv-x:focus-visible,.pv-tools input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.pv-tools input{width:58px;font:inherit;font-size:14px;min-height:34px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-align:center;font-variant-numeric:tabular-nums}
+.pv-tools .sep{flex:1}
+.pv-tools .tot{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pv-range{font-size:12.5px;font-weight:700;color:var(--accent)}
+.pv-body{flex:1;overflow:auto;background:#7d838d;display:flex;justify-content:center;align-items:flex-start;padding:14px}
+.pv-body canvas{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3);max-width:none}
+.pv-msg{color:#fff;font-size:15px;padding:40px 16px;text-align:center;line-height:1.7}
+@media (max-width:640px){dialog#pv{width:100vw;height:100%;max-height:100%;max-width:100vw;border-radius:0}.pv-body{padding:6px}.pv-tools .hide-s{display:none}}
+@media (max-width:640px){
+  .wrap{padding:20px 14px 48px}
+  table{min-width:0}
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr.item{border-bottom:1px solid var(--line);padding:10px 12px}
+  tr.item td{border:0;padding:2px 0}
+  tr.item td.code{display:inline-block;width:auto;margin-right:8px}
+  tr.item td.st{display:inline-block;width:auto}
+  tr.item td.loc::before{content:"교재 위치 ";color:var(--muted);font-size:12px}
+  tr.item td.pg::before{content:"쪽 ";color:var(--muted);font-size:12px}
+  tr.item td:first-child{box-shadow:none}
+  tr.row-gap{box-shadow:inset 3px 0 0 var(--gap)} tr.row-part{box-shadow:inset 3px 0 0 var(--part)} tr.row-ok{box-shadow:inset 3px 0 0 var(--ok)}
+  tr.major td,tr.sub td{padding:8px 12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="crumb"><a href="../../">study-vault</a> / <a href="../">jodal</a> / <a href="./">summary</a> / 출제기준 맵핑</div>
+    <h1>공공조달관리사 실기 출제기준–표준교재 맵핑</h1>
+    <p class="sub">출제기준(실기, 2026.03.01~2028.12.31) 세세항목 순서로 표준교재 『공공조달 관리실무』 쪽수를 맞췄습니다. 쪽수는 교재 인쇄 쪽수입니다.</p>
+  </header>
+
+  <section class="tiles" id="tiles" aria-label="수록 현황 요약"></section>
+
+  <div class="bar" role="group" aria-label="표 필터">
+    <button type="button" id="f-all" data-f="all" aria-pressed="true">전체</button>
+    <button type="button" id="f-ok" data-f="ok" aria-pressed="false">수록</button>
+    <button type="button" id="f-part" data-f="part" aria-pressed="false">일부</button>
+    <button type="button" id="f-gap" data-f="gap" aria-pressed="false">공백</button>
+  </div>
+  <div class="legend">
+    <span><span class="pill s-ok">수록</span> 교재가 충분히 다룸</span>
+    <span><span class="pill s-part">일부</span> 언급하나 설명이 부족함</span>
+    <span><span class="pill s-gap">공백</span> 출제기준에만 있음</span>
+    <span><span class="pos">위치 다름</span> 교재 위치 칸에 표시. 배치가 출제기준 순서와 다름</span>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>번호</th><th>세세항목(출제기준)</th><th>상태</th><th>교재 위치</th><th>쪽</th><th>비고 · 보충할 필기 출제기준</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+
+  <div class="foot">
+    <span>필기 출제기준 표기: 1과목 공공조달과 법제도 이해, 2과목 공공조달계획 수립 및 분석, 3과목 공공계약관리. 번호는 주요항목-세부항목-세세항목 순입니다.</span>
+    <span>출제기준 원문 4-3의 세부항목명은 '계약 변경 관리하리'로 오타가 있습니다.</span>
+    <span>쪽수(파란 밑줄)를 누르면 교재의 해당 쪽이 팝업으로 열립니다.</span>
+    <span>계약금액 조정요건 등 현행 법령은 국가법령정보센터(law.go.kr)에서 확인하세요.</span>
+  </div>
+</div>
+
+<dialog id="pv" aria-labelledby="pv-t">
+  <div class="pv-head">
+    <div class="pv-title"><b id="pv-t">교재 보기</b><span id="pv-s"></span></div>
+    <button type="button" class="pv-x" id="pv-close" aria-label="닫기">닫기 ✕</button>
+  </div>
+  <div class="pv-tools">
+    <button type="button" id="pv-prev" aria-label="이전 쪽">◀ 이전</button>
+    <label for="pv-num" class="tot">쪽</label>
+    <input id="pv-num" type="number" inputmode="numeric" min="1" value="1" aria-label="쪽 번호">
+    <span class="tot" id="pv-tot">/ –</span>
+    <button type="button" id="pv-next" aria-label="다음 쪽">다음 ▶</button>
+    <span class="pv-range" id="pv-range"></span>
+    <span class="sep"></span>
+    <button type="button" id="pv-zo" aria-label="축소">－</button>
+    <button type="button" id="pv-fit" class="hide-s">너비 맞춤</button>
+    <button type="button" id="pv-zi" aria-label="확대">＋</button>
+    <a id="pv-open" href="#" target="_blank" rel="noopener" class="hide-s">새 창</a>
+  </div>
+  <div class="pv-body" id="pv-body"><div class="pv-msg">교재를 불러오는 중입니다…</div></div>
+</dialog>
+
+<script>
+const D=[
+{m:"1. 공공조달 입찰 참가 준비"},
+{s:"1-1. 공공조달 참여 준비하기"},
+["1-1-1","공공조달 참가에 필요한 고유 법령과 일반제도 확인","part","1장 1절 · 8장 1절","7~8, 395~400","1장은 입찰참가자격등록규정만 소개합니다. 법령 체계는 8장에서 다룹니다.",1],
+["1-1-2","경쟁입찰참가자격 요건 검토","part","1장 1절 · 8장 1절","7~8, 397~399","등록 요건은 1장에 있습니다. 실적제한 요건 사례는 8장에 있습니다.",1],
+["1-1-3","직접생산확인기준 검토","ok","1장 2절","17~18, 38","2024년 2월부터 제조공정표는 실태조사 때 제출합니다. 중소기업자 간 경쟁제품은 등록 단계에서 증명서를 냅니다."],
+["1-1-4","적합한 업종 검토","ok","1장 2절","19","업종사항 찾기와 면허등록번호 입력 절차를 다룹니다."],
+{s:"1-2. 입찰자격 정보관리하기"},
+["1-2-1","공급대상물 유형별 품명/세부품명 신규 등록","ok","1장 2절 2.1","20~57","처리일수: 품명 24일, 신산업 17일, 품목 8일, 변경 5일. 교재는 자격등록(1절) 뒤에 둡니다.",1],
+["1-2-2","변동 시 경쟁입찰참가자격 등록증 정보 갱신","part","1장 1절","7, 11","즉시 변경등록 의무만 언급합니다. 변경등록 화면 절차는 없습니다."],
+["1-2-3","공급 물품의 목록화 작업","ok","1장 2절 2.1","20~57","개별등록, 엑셀 일괄등록, 융복합상품 등록을 다룹니다. 보완요구 기한은 15일입니다.",1],
+["1-2-4","입찰 참여 제출서류 준비","ok","1장 1절","14~16","등록신청 후 20일 안에 서류를 내지 않으면 반려됩니다."],
+{s:"1-3. 경쟁입찰 참가자격신청하기"},
+["1-3-1","경쟁입찰참가자격 등록 문서 작성","ok","1장 1절","7~16","출제기준은 1-3에 두지만 교재는 1장 맨 앞에 둡니다.",1],
+["1-3-2","등록증에 세부품명 등록","ok","1장 2절","17~19","공급물품·제조물품·용역·공사 세부품명 선택 화면을 다룹니다."],
+["1-3-3","등록증에 입찰대리인 등록","part","1장 1절","7","'입찰참가대리인' 용어만 나옵니다. 등록 절차는 없습니다."],
+
+{m:"2. 공공조달 입찰계획 수립"},
+{s:"2-1. 환경분석하기"},
+["2-1-1","공공조달 동향 자료 수집","ok","2장 1절","65~70","'동향' 대신 '실적 변화 추세'라는 말을 씁니다. 조달데이터허브 보고서로 수집합니다."],
+["2-1-2","수집 자료로 동향 분석","ok","2장 1절","66~70","기관 유형별 연간·월간 실적 추세를 분석합니다."],
+["2-1-3","수요기관 조달계획 정보 식별","ok","2장 3절","79~84","발주계획 조회 절차를 다룹니다."],
+["2-1-4","분석 결과로 정책·제도·법률 확인","part","2장 3절","85~88","태장도서관 청소용역 사례에서만 다룹니다(지역제한, 낙찰하한율 87.745% 등)."],
+["2-1-5","입찰계획 보고서로 입찰 적정성 확인","gap","—","—","보고서 작성법이 없습니다.",0,"필기 2과목 1-2 공공조달 적정성 분석"],
+["2-1-6","입찰 적정성 결과로 수요정보 예측","ok","2장 2절","71~77","수요예측은 실적 자료와 교차 검증하라고 안내합니다(75쪽)."],
+{s:"2-2. 조달 수요정보 수집하기"},
+["2-2-1","수요기관 발주계획 정보 수집","ok","2장 3절","79~84",""],
+["2-2-2","전자조달시스템으로 공급정보 수집","ok","2장 1절 · 3절","65~70, 80~84","조달데이터허브와 나라장터 검색을 활용합니다."],
+["2-2-3","수요정보 분류와 문서화","part","2장 1~2절","65~78","보고서 조회·다운로드 위주입니다. 문서화 방법은 없습니다."],
+{s:"2-3. 공급계획수립하기"},
+["2-3-1","유형별 공급대상물의 경제성 분석","ok","3장 전체","93~138","출제기준은 세세항목 1개입니다. 교재는 46쪽 분량의 장 1개(제조·용역·공사 원가계산)를 씁니다.",1],
+["2-3-2","품명별 기술 적합도 검증","gap","—","—","'적합도'가 교재에 나오지 않습니다.",0,"필기 2과목 1-2-4 공급역량분석(가까운 항목)"],
+["2-3-3","환경분석으로 공급계획 수립","ok","2장 3절","79~91","발주계획→사전규격→입찰공고→개찰을 사례 1개로 묶습니다. 주요항목 3까지 넘나듭니다.",1],
+
+{m:"3. 입찰실행 관리"},
+{s:"3-1. 입찰서류 작성하기"},
+["3-1-1","예정가격기준에 따른 견적서 작성","ok","3장 1·4절 · 6장 2절","95, 133, 245~249","이론은 3장 산출내역서 설명에 있습니다. 실무는 6장 물품 입찰에 있습니다.",1],
+["3-1-2","평가요소를 고려한 기술제안서 작성","ok","4장 1절","141~148","5단계 작성 절차와 평가기준·목차 조견표를 다룹니다."],
+["3-1-3","평가기준에 맞춰 제안서 내용 설명","ok","4장 1~2절","142, 149~165","발표형 서식과 제안 발표 평가 절차를 다룹니다."],
+{s:"3-2. 입찰평가 기준 검증하기"},
+["3-2-1","낙찰방법별 가격·기술평가 점수 산정","ok","4장 2절 · 6장 2절","159~166, 262~263","교재는 4장과 6장에 나눠 둡니다.",1],
+["3-2-2","낙찰자 선정방법별 예상 평가점수 산정","ok","6장 2절 2.3 · 4절 4.1~4.6","265~281, 298~323","적격심사, PQ, 종합심사, 종합평가. 교재는 '계약관리' 장(6장)에 둡니다.",1],
+["3-2-3","심사 과정의 이해상충 문제 식별","part","4장 2절","154","평가위원 회피·제척 1쪽뿐입니다."],
+{s:"3-3. 협상 관리하기"},
+["3-3-1","공고 요구 내용의 추가·삭제·변경 협상","ok","4장 3절","166~168",""],
+["3-3-2","기술협상의 과업 조정","ok","4장 3절","166~168",""],
+["3-3-3","조정 결과로 가격 증감 조정","ok","4장 3절 · 7장 1절 1.3","168~172, 359~361","MAS 가격협상은 7장에 따로 있습니다."],
+
+{m:"4. 계약일반관리"},
+{s:"4-1. 계약 체결 관리하기"},
+["4-1-1","계약서 작성에 필요한 서류 준비","ok","5장 1절 · 6장 1절 1.2","177~183, 206~211","같은 내용을 5장과 6장에서 2번 다룹니다.",1],
+["4-1-2","이행보증 요구 시 서류 준비","ok","5장 3절 · 6장 1절 1.9","188~196, 239","보증도 5장과 6장에 나뉩니다.",1],
+["4-1-3","계약법에 따른 계약서 작성","ok","5장 1절 · 6장 1절 1.2","177~183, 206~211","전자계약 초안 → 회신 → 체결 순서입니다."],
+["4-1-4","계약 목적·금액·기간·보증금·지체상금 설명","part","5장 1절","177~183","지체상금 면제 요건만 182쪽에 있습니다. 조항별 설명은 없습니다."],
+{s:"4-2. 계약 이행 관리하기"},
+["4-2-1","계약 목적·대상·금액·기간 파악","part","5장 1절","177~182","나라장터 계약정보 조회 위주입니다."],
+["4-2-2","이행 절차·방법 계획 수립","part","5장 2절 · 6장 1절 1.4","184~187, 214~216","착수보고·착수계 위주입니다. 계획 수립 방법은 없습니다.",1,"필기 3과목 1-1-4 소요자원 투입계획"],
+["4-2-3","선급금 산정과 신청","ok","5장 2절 · 6장 1절 1.5","187, 217~222","교재는 '선금'으로 씁니다."],
+["4-2-4","계획에 따른 수행","ok","6장 1절 1.3~1.4","212~216","물품·용역 이행 절차와 착공(착수)계를 다룹니다."],
+{s:"4-3. 계약 변경 관리하기"},
+["4-3-1","계약법령의 조정요건 판단","gap","3장 1절(분류만)","98~99","물가변동·설계변경은 원가계산 분류로만 나옵니다.",0,"필기 3과목 1-2-1 변경계약 일반절차, 2-2-2 물품 설계변경, 4-2-5 공사 설계변경"],
+["4-3-2","조정요건별 처리방법 판단","gap","—","—","",0,"필기 3과목 1-2-2 변경계약 절차 실행"],
+["4-3-3","계약 변경 서류 준비","ok","5장 1절 · 6장 1.2 · 7장 1.4","179~183, 206~211, 362~367","나라장터 계약변경요청서 작성 절차입니다."],
+["4-3-4","물가변동·설계변경 반영 계약서 작성","part","5장 1절","179~183","변경계약서 입력 절차만 있습니다. 조정금액 산정 방법은 없습니다.",0,"필기 3과목 2-2-2, 4-2-5 설계변경 및 계약금액 조정"],
+["4-3-5","변경 계약서 내용 설명","part","5장 1절","182","변경 사유와 지체상금 면제 표시만 다룹니다."],
+{s:"4-4. 계약 종결 관리하기"},
+["4-4-1","이행 완료 판단","ok","6장 1절 1.6 · 4절 4.8","223~226, 327~335","검사(검수)와 공사 준공검사를 다룹니다."],
+["4-4-2","검사·검수·대금청구 서류 준비","ok","6장 1절 1.5~1.8","217~238",""],
+["4-4-3","이행 완료 서류 작성","ok","6장 1절 1.6~1.8 · 4절 4.8","223~238, 327~335",""],
+["4-4-4","계약 해제·해지 절차와 서류","part","5장 1절 · 4장 2절","177, 150","1문장과 허위 제안서 사례뿐입니다.",0,"필기 1과목 5-1-3, 6-2-1 / 3과목 1-2-3 해제·해지 절차, 1-2-4 손해배상"],
+
+{m:"5. 공급대상물 유형별 계약관리"},
+{s:"5-1. 공사 계약 관리하기 (출제기준 1번째, 교재 6장 4절 마지막)"},
+["5-1-1","공사 특화 계약조건에 따른 체결","ok","6장 4절 4.1~4.7","296~326","PQ, 적격성심사, 입찰서, 적격심사, 종합심사, 종합평가, 국가유산수리공사. 입찰 단계 위주입니다.",1],
+["5-1-2","공사 특화 계약이행 절차 관리","part","6장 4절 4.8","327~335","기성·준공 검사 위주입니다.",1],
+["5-1-3","하도급법에 따른 원·하수급자 이행절차","gap","6장 4절(평가 항목만)","278, 299, 302, 314~315","표준하도급계약서 선택, 신인도 감점만 나옵니다.",1,"필기 1과목 5-4-4 / 3과목 1-1-5 하도급계약 승인, 4-3-5 하도급관리, 4-3-6 하도급지킴이"],
+{s:"5-2. 물품 계약 관리하기"},
+["5-2-1","물품 특화 계약조건에 따른 체결","ok","6장 2절","245~281","입찰 절차 위주입니다(공고, 견적, 투찰, 적격심사)."],
+["5-2-2","물품 특화 계약이행 절차 관리","ok","6장 1절 1.3 · 1.6","212~213, 223~226","공통 절차로 다룹니다.",1],
+["5-2-3","다수공급자(MAS) 계약이행 절차","ok","7장 1절","339~369","출제기준은 물품계약 안에 둡니다. 교재는 7장에 따로 둡니다.",1],
+["5-2-4","단가계약 이행절차","part","7장 1절","339","제3자단가계약(MAS)만 다룹니다. 일반 단가계약은 없습니다.",1],
+{s:"5-3. 용역 계약 관리하기"},
+["5-3-1","용역 특화 계약조건에 따른 체결","ok","6장 3절","282~295","사업설명회, 실적심사, 공동수급을 다룹니다.",1],
+["5-3-2","용역 특화 계약이행 절차 관리","part","6장 1절 1.3~1.4","212~216","공통 절차로만 다룹니다."],
+["5-3-3","하도급법에 따른 원·하수급자 이행절차","gap","4장 2절(평가 항목만)","151, 163","제안평가 항목으로만 나옵니다.",0,"필기 3과목 1-1-5 하도급계약 승인 및 변경 계획"],
+
+{m:"6. 공공조달 리스크 관리 (세부 4개 · 세세 15개 전부 공백)"},
+{s:"6-1. 공급리스크 식별하기"},
+["6-1-1","입찰계획에 따른 리스크 관리 계획 수립","gap","—","—","'리스크'는 148쪽에 1회만 나옵니다.",0,"필기 2과목 1-4-3 공급관리 및 위험분석"],
+["6-1-2","영향을 미치는 위험 식별","gap","—","—","",0,"필기 2과목 1-4-3"],
+["6-1-3","리스크 유형별 분류","gap","—","—","",0,"필기 2과목 1-4-3"],
+{s:"6-2. 위험도 평가하기"},
+["6-2-1","위험도 평가계획 수립","gap","—","—","",0,"필기 3과목 1-3-5 계약상 위험 관리"],
+["6-2-2","발생 확률 추정","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-2-3","영향 정도 추정","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-2-4","중요도 산정","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-2-5","우선순위 높은 리스크 결정","gap","—","—","",0,"필기 3과목 1-3-5"],
+{s:"6-3. 리스크 대응계획 수립하기"},
+["6-3-1","주요 리스크 대응계획 수립","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-3-2","대응방안 적정성 평가","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-3-3","우발적 리스크 비상 대응계획 수립","gap","—","—","",0,"필기 2과목 1-1-4 비상 공급계획 수립"],
+{s:"6-4. 리스크 발생 모니터링하기"},
+["6-4-1","대응계획 실행 여부 확인","gap","—","—","",0,"필기 3과목 1-3-5"],
+["6-4-2","대응방안 성과 확인","gap","—","—","",0,"필기 3과목 1-3-4 계약성과관리"],
+["6-4-3","새로운 리스크 식별","gap","—","—","",0,"필기 2과목 1-4-3"],
+["6-4-4","모니터링 결과 공유와 조치 제안","gap","—","—","",0,"필기 3과목 1-3-5"],
+
+{m:"7. 공공조달 법제도 활용"},
+{s:"7-1. 법령 활용하기"},
+["7-1-1","관련 법령의 구조와 적용범위 설명","part","8장 1절","395~396","국가·지방계약법 검색과 계약예규를 다룹니다. 공기업 계약사무규칙은 이름만 나옵니다.",0,"필기 1과목 5-5 공기업·준정부기관 계약사무규칙"],
+["7-1-2","공고·계약서의 법적 근거 확인, 불리한 조건 대응","ok","8장 1절","397~399","실적제한 1배 초과 사례로 사전규격 의견 제시를 설명합니다."],
+["7-1-3","유권해석·판례로 쟁점 정리","part","8장 1절","399~400","유권해석 사례는 있습니다. 판례는 소개 문구뿐입니다.",0,"필기 1과목 6-1-2 유권해석 및 감사사례"],
+{s:"7-2. 분쟁 대응하기"},
+["7-2-1","분쟁 원인 파악과 예방관리","gap","예방 문구만","147, 168, 399","8장 키워드에 '분쟁조정(ADR)'이 있으나 본문에 없습니다.",0,"필기 1과목 6-1-1 공공조달 분쟁조정 / 3과목 1-2-5 분쟁해결 절차"],
+["7-2-2","분쟁 발생 시 대응 절차 진행","gap","—","—","",0,"필기 1과목 5-2-5 이의신청과 분쟁조정 / 2과목 3-5-2 이의제기"],
+["7-2-3","법무 담당자·전문가와 협력 대응","gap","—","—","",0,"필기 3과목 1-2-5 분쟁해결 절차"],
+{s:"7-3. 우대제도 활용하기"},
+["7-3-1","우대제도 종류·특징 파악과 적용","ok","8장 2절","401~412","중소기업, 기술개발, 녹색, 여성·장애인·사회적기업 우선구매를 다룹니다."],
+["7-3-2","우대제도 자격 확보와 서류 준비","ok","8장 2절 · 7장 2절","401~412, 370~391","우수제품 신규 신청(7장 2절)도 여기에 해당합니다.",1],
+["7-3-3","우대제도와 입찰 전략 연계","part","8장 2절","401~412","제도 소개 위주입니다.",0,"필기 1과목 4 전략적 공공조달"],
+
+{m:"8. 전자조달시스템 활용"},
+{s:"8-1. 전자조달시스템 이용하기"},
+["8-1-1","입찰공고·참가자격 등록·계약 현황 조회","ok","6장 1절 1.1 · 1장 1절","201~205, 7~16","교재는 공고 검색을 4·5장 뒤에 둡니다.",1],
+["8-1-2","입찰서 제출·계약 체결·대금 청구 수행","ok","6장 2절 · 4.3 · 1.2 · 1.5","250~256, 307~312, 206~211, 217~222",""],
+["8-1-3","연계 외부 시스템의 조달정보 통합 활용","part","2장 1절","65~66, 69, 89","디브레인·방위사업청·한전 데이터 통합과 Open API를 소개합니다. 연계 절차는 없습니다.",1],
+["8-1-4","시스템 오류·문제 해결","part","1장 2절 · 2장 2절","40, 50, 54~56, 77","이미지 등록 조건, 엑셀 일괄등록 오류 재등록, 입찰혼잡도 6단계 예측을 다룹니다."],
+{s:"8-2. 조달데이터 활용하기"},
+["8-2-1","데이터 분류와 정보 추출","ok","2장 1절","65~70","출제기준은 맨 끝에 두지만 교재는 2장에 둡니다.",1],
+["8-2-2","조달데이터로 의사결정 지원","ok","2장 2~3절","71~91","수요예측, 입찰혼잡도, 수요기관 선정 사례를 다룹니다.",1],
+["8-2-3","데이터 분석과 시각화","ok","2장 1~2절","65~66, 70~71","데이터 시각화 메뉴를 다룹니다.",1],
+["8-2-4","출처·신뢰성 검토와 보고서 정리","part","2장 2절 · 1장 2절","75, 32","교차 검증과 목록정보 신뢰성 원칙만 있습니다. 출처 검토와 보고서 정리 방법은 없습니다.",1]
+];
+
+const label={ok:"수록",part:"일부",gap:"공백"};
+function pgLinks(r){
+  if(!/\d/.test(r[4])) return r[4];
+  return r[4].split(/,\s*/).map(seg=>{
+    const m=seg.match(/(\d+)(?:~(\d+))?/); if(!m) return seg;
+    const a=+m[1], b=m[2]?+m[2]:a;
+    return `<button type="button" class="pgl" data-a="${a}" data-b="${b}" data-code="${r[0]}" data-name="${r[1].replace(/"/g,'&quot;')}" data-loc="${r[3]}">${seg}</button>`;
+  }).join(", ");
+}
+const items=D.filter(Array.isArray);
+const cnt={ok:0,part:0,gap:0,pos:0};
+items.forEach(r=>{cnt[r[2]]++; if(r[6]) cnt.pos++;});
+document.getElementById("tiles").innerHTML=
+ [["전체 세세항목",items.length,"var(--accent)"],["수록",cnt.ok,"var(--ok)"],["일부",cnt.part,"var(--part)"],["공백",cnt.gap,"var(--gap)"]]
+ .map(t=>`<div class="tile" style="--c:${t[2]}"><b>${t[1]}</b><span>${t[0]}</span></div>`).join("");
+
+const tb=document.getElementById("tb");
+function render(f){
+  let html="", pendingM="", pendingS="";
+  D.forEach(r=>{
+    if(r.m){pendingM=r.m;pendingS="";return;}
+    if(r.s){pendingS=r.s;return;}
+    const show=f==="all"||r[2]===f;
+    if(!show) return;
+    if(pendingM){html+=`<tr class="major"><td colspan="6">${pendingM}</td></tr>`;pendingM="";}
+    if(pendingS){html+=`<tr class="sub"><td colspan="6">${pendingS}</td></tr>`;pendingS="";}
+    const pos=r[6]?` <span class="pos">위치 다름</span>`:"";
+    const fill=r[7]?`<span class="fill">보충: ${r[7]}</span>`:"";
+    html+=`<tr class="item row-${r[2]}"><td class="code">${r[0]}</td><td>${r[1]}</td><td class="st"><span class="pill s-${r[2]}">${label[r[2]]}</span></td><td class="loc">${r[3]}${pos}</td><td class="pg">${pgLinks(r)}</td><td class="note">${r[5]}${fill}</td></tr>`;
+  });
+  tb.innerHTML=html;
+}
+document.querySelectorAll(".bar button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".bar button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true"); render(b.dataset.f);
+}));
+render("all");
+</script>
+<script type="module">
+/* ===== 설정: 교재 PDF 경로만 바꾸면 됩니다 ===== */
+const PDF_URL = "textbook/standard-textbook.pdf";
+/* 교재 인쇄 쪽수와 PDF 쪽 번호의 차이. 현재 교재는 같으므로 0 */
+const PAGE_OFFSET = 0;
+
+const LIB = new URL("lib/pdfjs/", location.href).href;
+const PDF_ABS = () => new URL(PDF_URL, location.href).href;
+const $ = id => document.getElementById(id);
+const dlg=$("pv"), body=$("pv-body"), num=$("pv-num");
+let pdfjs=null, doc=null, loading=null, page=1, range=[1,1], zoom=1, task=null;
+
+async function load(){
+  if(doc) return doc;
+  if(!loading) loading=(async()=>{
+    pdfjs = await import(LIB+"build/pdf.min.mjs");
+    pdfjs.GlobalWorkerOptions.workerSrc = LIB+"build/pdf.worker.min.mjs";
+    const t = pdfjs.getDocument({url:PDF_ABS(), wasmUrl:LIB+"wasm/", iccUrl:LIB+"iccs/",
+      disableAutoFetch:true, disableStream:true});
+    doc = await t.promise; $("pv-tot").textContent="/ "+doc.numPages; num.max=doc.numPages; return doc;
+  })();
+  try{ return await loading; }catch(e){ loading=null; throw e; }
+}
+function msg(t){ body.innerHTML=`<div class="pv-msg">${t}</div>`; }
+async function render(){
+  num.value=page;
+  $("pv-prev").disabled=page<=1; $("pv-next").disabled=doc&&page>=doc.numPages;
+  const inR = page>=range[0]&&page<=range[1];
+  $("pv-range").textContent = range[0]===range[1] ? "" : (inR?`범위 ${range[0]}~${range[1]}쪽 중 ${page-range[0]+1}/${range[1]-range[0]+1}`:`범위 ${range[0]}~${range[1]}쪽 밖`);
+  $("pv-open").href = PDF_URL+"#page="+(page+PAGE_OFFSET);
+  const p = await doc.getPage(page+PAGE_OFFSET);
+  const base = p.getViewport({scale:1});
+  const avail = Math.max(200, body.clientWidth-28);
+  const css = avail/base.width*zoom, dpr=Math.min(window.devicePixelRatio||1,3);
+  const vp = p.getViewport({scale:css*dpr});
+  const c=document.createElement("canvas");
+  c.width=Math.floor(vp.width); c.height=Math.floor(vp.height);
+  c.style.width=Math.floor(vp.width/dpr)+"px"; c.style.height=Math.floor(vp.height/dpr)+"px";
+  c.setAttribute("aria-label",`교재 ${page}쪽`);
+  if(task) task.cancel();
+  task=p.render({canvasContext:c.getContext("2d"),viewport:vp});
+  try{ await task.promise; }catch(e){ if(e&&e.name==="RenderingCancelledException") return; throw e; }
+  body.replaceChildren(c); body.scrollTop=0;
+}
+async function go(n){
+  if(!doc) return; page=Math.min(Math.max(1,n),doc.numPages);
+  try{ await render(); }catch(e){ msg("이 쪽을 그리지 못했습니다. 다시 시도해 주세요."); }
+}
+async function openAt(btn){
+  range=[+btn.dataset.a,+btn.dataset.b]; page=range[0]; zoom=1;
+  $("pv-t").textContent=`${btn.dataset.code} ${btn.dataset.name}`;
+  $("pv-s").textContent=`${btn.dataset.loc} · ${btn.textContent}쪽`;
+  if(!dlg.open) dlg.showModal();
+  if(!doc) msg("교재를 불러오는 중입니다…");
+  try{ await load(); await go(page); }
+  catch(e){ msg(`교재 PDF를 열지 못했습니다.<br><b>${PDF_URL}</b> 경로에 파일이 있는지 확인해 주세요.<br>내 컴퓨터에서 index.html을 바로 열면 작동하지 않습니다. README의 방법으로 여세요.`); }
+}
+document.addEventListener("click",e=>{ const b=e.target.closest(".pgl"); if(b) openAt(b); });
+$("pv-close").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{ if(e.target===dlg) dlg.close(); });
+$("pv-prev").onclick=()=>go(page-1);
+$("pv-next").onclick=()=>go(page+1);
+num.addEventListener("change",()=>go(parseInt(num.value,10)||page));
+$("pv-zi").onclick=()=>{zoom=Math.min(zoom*1.25,4);go(page);};
+$("pv-zo").onclick=()=>{zoom=Math.max(zoom/1.25,.4);go(page);};
+$("pv-fit").onclick=()=>{zoom=1;go(page);};
+dlg.addEventListener("keydown",e=>{
+  if(e.target===num) return;
+  if(e.key==="ArrowRight"){e.preventDefault();go(page+1);}
+  if(e.key==="ArrowLeft"){e.preventDefault();go(page-1);}
+});
+let rt; window.addEventListener("resize",()=>{ if(!dlg.open||!doc) return; clearTimeout(rt); rt=setTimeout(()=>go(page),200); });
+</script>
+</body>
+</html>
